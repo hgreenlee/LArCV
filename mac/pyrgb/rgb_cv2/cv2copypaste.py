@@ -1,5 +1,5 @@
-from cv2selection import CV2Selection
-from cv2selection import QtGui
+from .cv2selection import CV2Selection
+from .cv2selection import QtGui
 
 class CV2CopyPaste(CV2Selection):
 
@@ -33,7 +33,7 @@ class CV2CopyPaste(CV2Selection):
         return "No description provided!"
 
     def __parsewidgets__(self):
-        print "Nothing to parse"
+        print("Nothing to parse")
 
     def __implement__(self, image): # updated every ROI move
         self.image_ref = image # shit better be reference or i will cry

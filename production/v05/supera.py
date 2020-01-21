@@ -15,16 +15,16 @@ from larlite import larlite as fmwk
 fmwk.storage_manager
 from larcv import larcv
 if os.path.exists(sys.argv[2]):
-    print "Output file exists. Please remove."
-    print "Output file specified: ",sys.argv[2]
-    print "Giving up."
+    print("Output file exists. Please remove.")
+    print("Output file specified: ",sys.argv[2])
+    print("Giving up.")
     sys.exit(1)
 
 # Create ana_processor instance
 my_proc = fmwk.ana_processor()
 
 # Set input root file
-for x in xrange(len(sys.argv)-3):
+for x in range(len(sys.argv)-3):
     my_proc.add_input_file(sys.argv[x+3])
 
 # Specify IO mode
@@ -41,16 +41,16 @@ unit.supera_fname(sys.argv[2])
 my_proc.add_process(unit)
 
 
-print
-print  "Finished configuring ana_processor. Start event loop!"
-print
+print()
+print("Finished configuring ana_processor. Start event loop!")
+print()
 
 # Let's run it.
 my_proc.run()
 
 # done!
-print
-print "Finished running ana_processor event loop!"
-print
+print()
+print("Finished running ana_processor event loop!")
+print()
 
 sys.exit(0)

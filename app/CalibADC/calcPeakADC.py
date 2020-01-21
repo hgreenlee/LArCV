@@ -28,7 +28,7 @@ ttree.Branch("planeid",planeid,"planeid/I")
 ttree.Branch("peak",peakmax,"peak/F")
 
 nentries = ioman.get_n_entries()
-print "NUM ENTRIES: ",nentries
+print("NUM ENTRIES: ",nentries)
 num_entries = 10000
 
 for entry in range(0,num_entries):
@@ -36,7 +36,7 @@ for entry in range(0,num_entries):
 
     event_images = ioman.get_data(larcv.kProductImage2D,"tpc")
     img0 = event_images.Image2DArray()[0]
-    print ioman.event_id().run(),ioman.event_id().subrun(),ioman.event_id().event(),"(",entry,")"
+    print(ioman.event_id().run(),ioman.event_id().subrun(),ioman.event_id().event(),"(",entry,")")
     wfm0 = larcv.as_ndarray(img0)
 
     x = np.linspace(0,wfm0.shape[1],wfm0.shape[1])
@@ -83,4 +83,4 @@ for entry in range(0,num_entries):
 
 out.Write()
 
-print 'done'
+print('done')

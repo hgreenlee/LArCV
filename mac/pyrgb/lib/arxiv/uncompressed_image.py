@@ -26,7 +26,7 @@ class UnCompressedImage(PlotImage):
             #                                                               meta.tr().x,
             #                                                               meta.tr().y)
             
-        print "xmin {} xmax {} ymin {} ymax {}".format(xmin,xmax,ymin,ymax)
+        print("xmin {} xmax {} ymin {} ymax {}".format(xmin,xmax,ymin,ymax))
         return ( xmin, xmax, ymin, ymax )
         
     def __create_mat__(self):
@@ -37,7 +37,7 @@ class UnCompressedImage(PlotImage):
 
         self.plot_mat = np.zeros([ int(xmax), int(ymax), 3 ])
 
-        print self.plot_mat.shape
+        print(self.plot_mat.shape)
 
         for ix,img in enumerate(self.img_v):
 
@@ -95,7 +95,7 @@ class UnCompressedImage(PlotImage):
             r['type'] = roi.Type()
             r['bbox'] = []
             
-            for iy in xrange(3):
+            for iy in range(3):
                 r['bbox'].append( roi.BB(iy) )
                 
             self.rois.append(r)

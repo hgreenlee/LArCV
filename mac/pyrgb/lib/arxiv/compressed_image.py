@@ -50,7 +50,7 @@ class CompressedImage(PlotImage):
             r['type'] = roi.Type()
             r['bbox'] = []
 
-            for iy in xrange(3):
+            for iy in range(3):
                 r['bbox'].append( roi.BB(iy) )
                 
             self.rois.append(r)

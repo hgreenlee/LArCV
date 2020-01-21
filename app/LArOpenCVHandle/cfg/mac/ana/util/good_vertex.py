@@ -1,4 +1,4 @@
-from util import *
+from .util import *
 import root_numpy as rn
 
 def retrieve_events(INFILE,good_vertex=True):
@@ -11,23 +11,23 @@ def retrieve_events(INFILE,good_vertex=True):
     back_reco_df_m = {}
 
     # drop duplicates
-    for tree_name_, index_ in trees_m.iteritems():
+    for tree_name_, index_ in trees_m.items():
         df = pd.DataFrame(rn.root2array(INFILE,treename=tree_name_))
 	df = df.drop_duplicates(subset=index_)
 	df_m[tree_name_] = df.set_index(base_index)
         
     signal_mc_idx = df_m['MCTree'].query('signal==1').index
 
-    for tree_name_, index_ in trees_m.iteritems():
-        print tree_name_,index_
+    for tree_name_, index_ in trees_m.items():
+        print(tree_name_,index_)
         signal_df = df_m[tree_name_].ix[signal_mc_idx]
         signal_df.index.names = base_index
         signal_df_m[tree_name_] = signal_df.copy()
 
-    for tree_name_, index_ in trees_m.iteritems():
+    for tree_name_, index_ in trees_m.items():
         signal_reco_df_m[tree_name_] = signal_df_m[tree_name_]
 
-    for tree_name_, index_ in trees_m.iteritems():
+    for tree_name_, index_ in trees_m.items():
         signal_reco_df_m[tree_name_] = signal_reco_df_m[tree_name_].reset_index().set_index(index_)
         
     s_vtx_tree = signal_reco_df_m['Vertex3DTree'].reset_index().set_index(base_index)

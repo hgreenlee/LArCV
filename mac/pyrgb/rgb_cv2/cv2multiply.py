@@ -1,5 +1,5 @@
-from cv2selection import CV2Selection
-from cv2selection import QtGui
+from .cv2selection import CV2Selection
+from .cv2selection import QtGui
 
 
 class CV2Multiply(CV2Selection):
@@ -14,14 +14,14 @@ class CV2Multiply(CV2Selection):
         self.widgets['multiply'] = (
             QtGui.QLabel("Multiply"), QtGui.QLineEdit())
 
-        for key, value in self.widgets.iteritems():
+        for key, value in self.widgets.items():
             value[1].setText(str(self.options[key]))
 
     def __description__(self):
         return "No description provided!"
 
     def __parsewidgets__(self):
-        for key, val in self.widgets.iteritems():
+        for key, val in self.widgets.items():
             self.options[key] = self.str2data(
                 self.types[key], str(val[1].text()))
 

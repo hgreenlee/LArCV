@@ -35,14 +35,14 @@ p.initialize()
 
 if not o.initialize():
     sys.exit(ERROR_WRITE_INIT)
-for idx in xrange(NUM_EVENT):
+for idx in range(NUM_EVENT):
 
     img1 = larcv.Image2D(9,9)
     img2 = larcv.Image2D(9,9)
 
     img1.paint(1)
 
-    for x in xrange(img2.as_vector().size()):
+    for x in range(img2.as_vector().size()):
         if x%2 == 0: img2.set_pixel(x,1)
         else: img2.set_pixel(x,0)
         

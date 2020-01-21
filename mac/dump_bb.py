@@ -10,16 +10,16 @@ roi_br_name='partroi_%s_branch' % ROI_PRODUCER
 roi_ch = TChain(roi_tree_name)
 roi_ch.AddFile(sys.argv[-1])
 
-for entry in xrange(roi_ch.GetEntries()):
+for entry in range(roi_ch.GetEntries()):
     
     roi_ch.GetEntry(entry)
     roi_br=None
     exec('roi_br=roi_ch.%s' % roi_br_name)
-    print
-    print roi_br.event_key()
+    print()
+    print(roi_br.event_key())
     bb_array = roi_br.ROIArray()
     for b in bb_array:
-        print b.dump()
+        print(b.dump())
 
     if len(sys.argv) == 4:
         IMG_PRODUCER = sys.argv[2]
@@ -31,7 +31,7 @@ for entry in xrange(roi_ch.GetEntries()):
         img_br=None
         exec('img_br=img_ch.%s' % img_br_name)
         img_array = img_br.Image2DArray()
-        print 'Image meta...'
+        print('Image meta...')
         for i in img_array:
-            print i.meta().dump()
+            print(i.meta().dump())
 

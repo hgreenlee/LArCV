@@ -20,7 +20,7 @@ g = rt.TGraph( npoints )
 
 algo = dbscan.DBSCANAlgo()
 data = dbscan.dbPoints()
-for ipt in xrange(0,npoints):
+for ipt in range(0,npoints):
     ig = np.random.randint(0,len(gauscenters))
     mean = gauscenters[ig]
     cov  = gauscovs[ig]
@@ -48,13 +48,13 @@ c.cd(2)
 
 s = time.time()
 output = algo.scan( data, 3, 1.0 )
-print "cluster time: ",time.time()-s," sec"
+print("cluster time: ",time.time()-s," sec")
 
-print "Number of clusters: ",output.clusters.size()
+print("Number of clusters: ",output.clusters.size())
 haxis = rt.TH2D("hout","",100,xmin,xmax,100,ymin,ymax)
 haxis.Draw()
 gclusters = []
-for icluster in xrange(0,output.clusters.size()):
+for icluster in range(0,output.clusters.size()):
     npts = output.clusters.at(icluster).size()
     gc = rt.TGraph( npts )
     for ipt in range(0,npts):
@@ -77,10 +77,10 @@ testpoint = std.vector("double")(2,0.0)
 testpoint[0] = gauscenters[0][0]
 testpoint[1] = gauscenters[0][1]
 match = output.findMatchingCluster( testpoint, data, 10.0 )
-print "matching cluster index=",match
+print("matching cluster index=",match)
 
-print "How'd we do?"
-raw_input()
+print("How'd we do?")
+input()
 
 
 #algo.initialize()

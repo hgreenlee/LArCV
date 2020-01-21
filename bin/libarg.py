@@ -1,14 +1,14 @@
 
-import sys,os,commands
+import sys,os,subprocess
 
 dirs=[]
 for d in os.listdir(os.environ['LARCV_BUILDDIR']):
     if not len([x for x in os.listdir('%s/%s' % (os.environ['LARCV_BUILDDIR'],d)) if x.endswith('.o')]): continue
     dirs.append(d)
-libs=[x for x in commands.getoutput('larcv-config --libs').split() if not x.startswith('-llarcv')]
-libs+= commands.getoutput('root-config --libs').split()
+libs=[x for x in subprocess.getoutput('larcv-config --libs').split() if not x.startswith('-llarcv')]
+libs+= subprocess.getoutput('root-config --libs').split()
 if 'LARLITE_BASEDIR' in os.environ:
-    libs+= commands.getoutput('larlite-config --libs').split()
+    libs+= subprocess.getoutput('larlite-config --libs').split()
     if 'LAROPENCV_BASEDIR' in os.environ:
         libs += [' -lLArOpenCV_Core']
         libs += [' -lLArOpenCV_ImageClusterBase']
@@ -18,7 +18,7 @@ if 'LARLITE_BASEDIR' in os.environ:
         libs += [' -lLArOpenCV_ImageClusterAlgoModule']
         libs += [' -lBasicTool_FhiclLite']
 if 'GEO2D_BASEDIR' in os.environ:
-    libs += commands.getoutput('geo2d-config --libs').split()
+    libs += subprocess.getoutput('geo2d-config --libs').split()
 if 'LARCV_ANN' and 'ANN_LIBDIR' in os.environ:
     libs+= [" -lANN" ]
 if 'PYTHON_LIB' in os.environ:
@@ -65,6 +65,6 @@ for d in dict_list:
 for l in libs:
     cmd += '%s ' % l
 
-if 'build' in sys.argv: print 1
-else: print cmd
+if 'build' in sys.argv: print(1)
+else: print(cmd)
 sys.exit(1)

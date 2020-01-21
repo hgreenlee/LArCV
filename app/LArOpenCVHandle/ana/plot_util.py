@@ -20,7 +20,7 @@ def energy_plotter(sig_mctree_s,sig_mctree_t,Emin,Emax,deltaE,key,Name):
     plt.tight_layout()
     plt.grid()
     SS="{}_energy.pdf".format(Name)
-    print "Write {}".format(SS)
+    print("Write {}".format(SS))
     plt.savefig(SS,format='pdf')
     plt.cla() 
     plt.clf()
@@ -42,7 +42,7 @@ def energy_plotter(sig_mctree_s,sig_mctree_t,Emin,Emax,deltaE,key,Name):
     energy_v_=[]
 
     
-    for ix in xrange(eff_v.size):
+    for ix in range(eff_v.size):
         if ix in res_v:
             eff_vv.append(np.array(eff_v_))
             signal_vv.append(np.array(signal_v_))
@@ -70,7 +70,7 @@ def energy_plotter(sig_mctree_s,sig_mctree_t,Emin,Emax,deltaE,key,Name):
     plt.grid()
     plt.tight_layout()
     SS="{}_energy_eff.pdf".format(Name)
-    print "Write {}".format(SS)
+    print("Write {}".format(SS))
     plt.savefig(SS,format='pdf')
     plt.cla() 
     plt.clf()
@@ -94,7 +94,7 @@ def angle_plotter(data1,data2,Tmin,Tmax,deltaT,Name):
     plt.tight_layout()
     plt.grid()
     SS="{}_angle.pdf".format(Name)
-    print "Write {}".format(SS)
+    print("Write {}".format(SS))
     plt.savefig(SS,format='pdf')
     plt.cla() 
     plt.clf()
@@ -115,7 +115,7 @@ def angle_plotter(data1,data2,Tmin,Tmax,deltaT,Name):
     signal_v_= []
     angle_v_ = []
 
-    for ix in xrange(eff_v.size):
+    for ix in range(eff_v.size):
         if ix in res_v:
             eff_vv.append(np.array(eff_v_))
             signal_vv.append(np.array(signal_v_))
@@ -144,7 +144,7 @@ def angle_plotter(data1,data2,Tmin,Tmax,deltaT,Name):
     plt.grid()
     plt.tight_layout()
     SS="{}_angle_eff.pdf".format(Name)
-    print "Write {}".format(SS)
+    print("Write {}".format(SS))
     plt.savefig(SS,format='pdf')
     plt.cla() 
     plt.clf()
@@ -159,7 +159,7 @@ def vertex_plotter(x0,x1,dx,data,xlabel,ylabel):
     ax.grid()
     ax.set_ylabel(ylabel,fontweight='bold')
     SS="{}_vs_{}.pdf".format(xlabel,ylabel)
-    print "Write {}".format(SS)
+    print("Write {}".format(SS))
     plt.savefig(SS,format='pdf')
     plt.cla()
     plt.clf()

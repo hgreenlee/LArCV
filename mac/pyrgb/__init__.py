@@ -14,5 +14,5 @@ larcv.load_pyutil
 try:
     import cv2
 except:
-    print "NO CV2"
+    print("NO CV2")
 

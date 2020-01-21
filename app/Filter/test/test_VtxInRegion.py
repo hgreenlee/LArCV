@@ -36,8 +36,8 @@ p.configure(cfg)
 
 x=[]
 y=[]
-for idx1 in xrange(0,1000,10):
-    for idx2 in xrange(-100,100,2):
+for idx1 in range(0,1000,10):
+    for idx2 in range(-100,100,2):
         event_roi1 = o.get_data(larcv.kProductROI,"vtxinregion")
         bb1 = larcv.ImageMeta(2,2,2,2,2,2,0) #doesn't matter
         roi1= larcv.ROI()

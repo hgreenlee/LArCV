@@ -1,4 +1,4 @@
-import commands, sys, os
+import subprocess, sys, os
 
 part=sys.argv[1]
 
@@ -35,7 +35,7 @@ for flist in flist_v:
     out_data = '%s/out_%02d.root' % (outdir,ctr)
     out_ana = '%s/ana_%02d.root' % (outdir,ctr)
     if os.path.isfile(out_data):
-        print 'Skipping',ctr,'(output already exists)'
+        print('Skipping',ctr,'(output already exists)')
         ctr+=1
         continue
     cwd=os.getcwd()
@@ -43,8 +43,8 @@ for flist in flist_v:
     for f in flist:
         cmd += ' %s' % f
     cmd += '; cd -'
-    print 'Processing',ctr
-    print commands.getoutput(cmd)
+    print('Processing',ctr)
+    print(subprocess.getoutput(cmd))
     if os.path.isfile('%s/out.root' % outdir):
         os.system('mv %s/out.root %s' % (outdir,out_data))
     if os.path.isfile('%s/ana.root' % outdir):

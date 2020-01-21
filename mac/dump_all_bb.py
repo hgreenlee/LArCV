@@ -24,7 +24,7 @@ if SEG_PRODUCER:
     seg_ch = TChain(seg_tree_name)
     seg_ch.AddFile(sys.argv[4])
 
-for entry in xrange(img_ch.GetEntries()):
+for entry in range(img_ch.GetEntries()):
 
     roi_br=img_br=seg_br=None
     img_ch.GetEntry(entry)
@@ -34,26 +34,26 @@ for entry in xrange(img_ch.GetEntries()):
         roi_ch.GetEntry(entry)
         exec('roi_br=roi_ch.%s' % roi_br_name)
 
-        print 'ROI...',ROI_PRODUCER
-        print roi_br.event_key()
+        print('ROI...',ROI_PRODUCER)
+        print(roi_br.event_key())
         bb_array = roi_br.ROIArray()
         for b in bb_array:
-            print b.dump(),
-        print
+            print(b.dump(), end=' ')
+        print()
 
     if SEG_PRODUCER:
         seg_ch.GetEntry(entry)
         exec('seg_br=seg_ch.%s' % seg_br_name)
 
-        print 'Seg...',SEG_PRODUCER
+        print('Seg...',SEG_PRODUCER)
         bb_array = seg_br.Image2DArray()
         for b in bb_array:
-            print b.meta().dump(),
-        print
+            print(b.meta().dump(), end=' ')
+        print()
         
-    print 'Image...',IMG_PRODUCER
+    print('Image...',IMG_PRODUCER)
     bb_array = img_br.Image2DArray()
     for b in bb_array:
-        print b.meta().dump(),
-    print
+        print(b.meta().dump(), end=' ')
+    print()
     break

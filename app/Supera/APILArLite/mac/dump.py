@@ -12,13 +12,13 @@ ch.GetEntry(0)
 
 img_v=ch.image2d_segment_bnbnu_mc_branch.Image2DArray()
 
-for i in xrange(3):
+for i in range(3):
     img=larcv.as_ndarray(img_v[i])
 
-    for col in xrange(len(img)):
-        for row in xrange(len(img[col])):
-            if img[col][row]: print '%-3d %-3d' % (row,col), img[col][row]
-        print
-    print
+    for col in range(len(img)):
+        for row in range(len(img[col])):
+            if img[col][row]: print('%-3d %-3d' % (row,col), img[col][row])
+        print()
+    print()
     plt.imshow(img)
-    aho=input()
+    aho=eval(input())

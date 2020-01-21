@@ -4,22 +4,13 @@ from .. import np
 import abc
 
 
-class PlotImage(object):
-    __metaclass__ = abc.ABCMeta
-
-    # notes
-    # work_mat is the ndarray representation of image2d data
-    # orig is the 3 channels we will manipulate on the screen
-    # plot_mat is modified to have overlays
-    # when loading, we manip orig_mat to have the orientation we want
-    # before going to caffe, __revert_image__ is called to rearrange the image
-    
+class PlotImage(object, metaclass=abc.ABCMeta):
     def __init__(self, img_v, roi_v, planes):
 
-        self.imgs = [img_v[i] for i in xrange(img_v.size())]
+        self.imgs = [img_v[i] for i in range(img_v.size())]
 
         if roi_v is not None:
-            self.roi_v = [roi_v[i] for i in xrange(roi_v.size())]
+            self.roi_v = [roi_v[i] for i in range(roi_v.size())]
 
         # list of QWidgets which user can choose the channel to go into RGB
         self.planes = None
@@ -39,7 +30,7 @@ class PlotImage(object):
                 ometa = ometa.inclusive(img.meta())
 
         tmp_img_v = []
-        for i in xrange(len(self.imgs)):
+        for i in range(len(self.imgs)):
             meta = larcv.ImageMeta(ometa.cols() * comp_x, ometa.rows() * comp_y,
                                    ometa.rows(), ometa.cols(),
                                    ometa.min_x(), ometa.max_y(), i)
@@ -134,7 +125,7 @@ class PlotImage(object):
     # swap channels that are shown
     def swap_plot_mat(self,imin,imax,newchs):
 
-        print "swap channels to: ", newchs
+        print("swap channels to: ", newchs)
 
         # store the original matrix into the working matrix
         self.__store_orig_mat()
@@ -172,7 +163,7 @@ class PlotImage(object):
             # the bounding boxes
             r['bbox'] = []
 
-            for iy in xrange(nbb):
+            for iy in range(nbb):
                 bb = roi.BB()[iy]
                 r['bbox'].append(bb)
 
@@ -202,7 +193,7 @@ class PlotImage(object):
 
     # reset the presets if there are any in this product
     def reset_presets(self):
-        for key,val in self.presets.iteritems():
+        for key,val in self.presets.items():
             self.preset_layout.removeWidget(val)
             val.setParent(None)
         self.presets = {}

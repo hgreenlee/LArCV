@@ -123,7 +123,7 @@ for name, group in groups_:
     query_='run=={}&subrun=={}&event=={}'.format(name[0],name[1],name[2])
     reco_event = reco_event_df.query(query_)
 
-    if DEBUG: print "run: ",name[0],"... subrun: ",name[1],"... event: ",name[2]
+    if DEBUG: print("run: ",name[0],"... subrun: ",name[1],"... event: ",name[2])
     
     nvtx=reco_event['n_vtx3d'].values[0]
 
@@ -137,13 +137,13 @@ for name, group in groups_:
 
     type_v = reco_vtx3d.vtx3d_type.values
 
-    if nvtx==1 or (nvtx>1 and np.where(type_v==0L)[0].size==1):
-        if DEBUG: print "Single choice"
+    if nvtx==1 or (nvtx>1 and np.where(type_v==0)[0].size==1):
+        if DEBUG: print("Single choice")
             
         b_single_choice=True
         type_v=np.array(type_v)
         if nvtx==2:
-            chosen_idx = np.where(type_v==0L)[0][0]
+            chosen_idx = np.where(type_v==0)[0][0]
         else:
             chosen_idx=0
         
@@ -171,12 +171,12 @@ for name, group in groups_:
         nvtx2=reco_vtx3d.index.values.size
 
         if nvtx2 < nvtx:
-            if DEBUG: print "Filtered via NPX frac"
+            if DEBUG: print("Filtered via NPX frac")
             
         nvtx=nvtx2
         
         if nvtx==0: 
-            if DEBUG: print "Filtered NPX frac bad_idx: ",bad_idx
+            if DEBUG: print("Filtered NPX frac bad_idx: ",bad_idx)
             n_event_vtx3d_f+=1;
             continue
 
@@ -194,7 +194,7 @@ for name, group in groups_:
 
         nvtx2=reco_vtx3d.index.values.size
         if nvtx2 < nvtx:
-            if DEBUG: print "Filtered angle_vv bad_idx: ",bad_idx
+            if DEBUG: print("Filtered angle_vv bad_idx: ",bad_idx)
         nvtx=nvtx2
         if nvtx==0:
             n_event_vtx3d_f_a+=1;
@@ -226,7 +226,7 @@ for name, group in groups_:
         #make the decision based on the length of th shortest track
             
         dec_=[]
-        if DEBUG: print "reco vtx3d id values: ",reco_vtx3d.vtx3d_id.values
+        if DEBUG: print("reco vtx3d id values: ",reco_vtx3d.vtx3d_id.values)
         
         for ix,vtx_id in enumerate(reco_vtx3d.vtx3d_id.values):
             
@@ -234,7 +234,7 @@ for name, group in groups_:
             
             thisvtx=reco_par.query('vtx3d_id=={}'.format(vtx_id))
     
-            for plane_id in xrange(3):
+            for plane_id in range(3):
                 thisplane=thisvtx.query("plane_id=={}".format(plane_id))
 
                 if (thisplane.n_pars.values[0] < 2): continue
@@ -254,8 +254,8 @@ for name, group in groups_:
         
         chosen_idx=np.argmax(dec_)
         if DEBUG:
-            print "chosen_idx: ", chosen_idx, "... dec_ ",dec_
-            print ""
+            print("chosen_idx: ", chosen_idx, "... dec_ ",dec_)
+            print("")
             
         close = correct(reco_vtx3d,group,chosen_idx)
 
@@ -267,7 +267,7 @@ for name, group in groups_:
 
     #is there a reco vertex, we just chose it wrong?
     good_reco=False
-    for idx_ in xrange(nvtx):
+    for idx_ in range(nvtx):
         
         if good_reco==True : continue
         good_reco = correct(reco_vtx3d,group,idx_)
@@ -327,42 +327,42 @@ for name, group in groups_:
         cc1.append(reco_par_zdf.query(query_).index.values[0])
 
 
-print "\n=========================================================\n"
-print "Total Signal: ",n_total
-print ""
-print "Events 1 Vtx:                   ",n_single_choice
-print "Correct choice:                 ",n_single_choice_right_good
-print "Correct choice was no good one: ",n_single_choice_right_bad
-print "Wrong choice was good one:      ",n_single_choice_wrong_good
-print "Wrong choice was no good one:   ",n_single_choice_wrong_bad
-print""
-print "Events > 0 Vtx:             ",n_event_vtx3d
-print "Events NOT pass pix frac:  ",n_event_vtx3d_f
-print "Events NOT pass angle cut: ",n_event_vtx3d_f_a
-print "Events parsed:             ",n_event_vtx3d-n_event_vtx3d_f-n_event_vtx3d_f_a
-print ""
-print "After filter..."
-print "N 1 vtx:   ",n_1_vtx
-print "N 2 vtx:   ",n_2_vtx
-print "N 3 vtx:   ",n_3_vtx
-print "N >=4 vtx: ",n_4more_vtx
-print ""
-print "N events make a choice:        ",n_make_a_choice
-print "N chose right:                 ",n_reco_chose_right
-print "N chose right was good one:    ",n_reco_chose_right_good
-print "N chose right was no good one: ",n_reco_chose_right_bad
-print "N chose wrong:                 ",n_reco_chose_wrong
-print "N chose wrong was good one:    ",n_reco_chose_wrong_good
-print "N chose wrong was no good one: ",n_reco_chose_wrong_bad
-print ""
-print "Good possible vtx diagnostic..."
-print "Total reco correct:  ",n_single_choice_right_good+n_reco_chose_right_good
-print "Total reco wrong:    ",n_single_choice_wrong_good+n_reco_chose_wrong_good
-print ""
-print "Best case senario..."
-print "N was good one:   ",n_good_reco
-print "N was wrong good: ",n_no_good_reco
-print "\n=========================================================\n"
-print "\n\n"
-print cc0
-print cc1
+print("\n=========================================================\n")
+print("Total Signal: ",n_total)
+print("")
+print("Events 1 Vtx:                   ",n_single_choice)
+print("Correct choice:                 ",n_single_choice_right_good)
+print("Correct choice was no good one: ",n_single_choice_right_bad)
+print("Wrong choice was good one:      ",n_single_choice_wrong_good)
+print("Wrong choice was no good one:   ",n_single_choice_wrong_bad)
+print("")
+print("Events > 0 Vtx:             ",n_event_vtx3d)
+print("Events NOT pass pix frac:  ",n_event_vtx3d_f)
+print("Events NOT pass angle cut: ",n_event_vtx3d_f_a)
+print("Events parsed:             ",n_event_vtx3d-n_event_vtx3d_f-n_event_vtx3d_f_a)
+print("")
+print("After filter...")
+print("N 1 vtx:   ",n_1_vtx)
+print("N 2 vtx:   ",n_2_vtx)
+print("N 3 vtx:   ",n_3_vtx)
+print("N >=4 vtx: ",n_4more_vtx)
+print("")
+print("N events make a choice:        ",n_make_a_choice)
+print("N chose right:                 ",n_reco_chose_right)
+print("N chose right was good one:    ",n_reco_chose_right_good)
+print("N chose right was no good one: ",n_reco_chose_right_bad)
+print("N chose wrong:                 ",n_reco_chose_wrong)
+print("N chose wrong was good one:    ",n_reco_chose_wrong_good)
+print("N chose wrong was no good one: ",n_reco_chose_wrong_bad)
+print("")
+print("Good possible vtx diagnostic...")
+print("Total reco correct:  ",n_single_choice_right_good+n_reco_chose_right_good)
+print("Total reco wrong:    ",n_single_choice_wrong_good+n_reco_chose_wrong_good)
+print("")
+print("Best case senario...")
+print("N was good one:   ",n_good_reco)
+print("N was wrong good: ",n_no_good_reco)
+print("\n=========================================================\n")
+print("\n\n")
+print(cc0)
+print(cc1)

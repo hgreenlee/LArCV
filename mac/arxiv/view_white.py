@@ -16,6 +16,6 @@ whitedisplay = whited.WhiteDisplay(sys.argv[1:])
 whitedisplay.show()
 
 if (sys.flags.interactive != 1) or not hasattr(QtCore, 'PYQT_VERSION'):
-    print "exec called ..."
+    print("exec called ...")
     whitedisplay.show()
     QtGui.QApplication.instance().exec_()

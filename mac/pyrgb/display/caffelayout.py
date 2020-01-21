@@ -40,7 +40,7 @@ class CaffeLayout(QtGui.QGridLayout):
             self.addWidget(self.scores, 3, 0)
 
         else:
-            for i in reversed(range(self.count())):
+            for i in reversed(list(range(self.count()))):
                 self.itemAt(i).widget().setParent(None)
 
         return self

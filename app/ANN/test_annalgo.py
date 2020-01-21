@@ -17,7 +17,7 @@ points1 = np.random.multivariate_normal(mean, cov, npoints)
 algo = ann.ANNAlgo( npoints, ndims )
 
 for ipt,pt in enumerate(points1):
-    print pt,type(pt),pt[0],pt[1]
+    print(pt,type(pt),pt[0],pt[1])
     v = std.vector("double")(ndims,0.0)
     v[0] = pt[0]
     v[1] = pt[1]
@@ -30,4 +30,4 @@ algo.printdata()
 # DUMP
 algo.dump( "anntest.dmp" )
 
-print "Made it!"
+print("Made it!")

@@ -3,7 +3,7 @@ import numpy as np
 
 #TWO different files from two ``scans"
 files = ["../god.root","../god2.root"]
-ioms  = [larcv.IOManager() for _ in xrange(len(files))]
+ioms  = [larcv.IOManager() for _ in range(len(files))]
 
 out_iom = larcv.IOManager(1)
 out_iom.set_out_file("god3.root")
@@ -16,11 +16,11 @@ for file_,iom in zip(files,ioms):
 
 entries = np.array([iom.get_n_entries()-1 for iom in ioms])
 max_entries = entries.max()
-for entry in xrange(max_entries+1):
+for entry in range(max_entries+1):
 
     evids  = []
     evrois = []
-    print "entry",entry
+    print("entry",entry)
     for ix,iom in enumerate(ioms):
         
         if entry > entries[ix]:
@@ -36,7 +36,7 @@ for entry in xrange(max_entries+1):
 
         
     hasroi = -1
-    print evids
+    print(evids)
     for ix,id_ in enumerate(evids):
 
         if id_[1] > 0:

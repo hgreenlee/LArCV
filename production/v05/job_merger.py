@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 from proddb.table import table
 from proddb.dbenv import *
-import sys,commands,os
+import sys,subprocess,os
 from subprocess import Popen, PIPE
 
 in_project1=sys.argv[1]
 in_project2=sys.argv[2]
 t1=table(in_project1)
 if not t1.exist():
-    print 'Project does not exist:',sys.argv[1]
+    print('Project does not exist:',sys.argv[1])
     sys.exit(1)
 t2=table(in_project2)
 if not t2.exist():
-    print 'Project does not exist:',sys.argv[2]
+    print('Project does not exist:',sys.argv[2])
     sys.exit(1)
 jobid  = int(sys.argv[3])
 session = t1.job_session(job_index=jobid)
@@ -32,10 +32,10 @@ if len(sys.argv) > 6:
     out_project = sys.argv[6]
 
 if not os.path.isdir(storage):
-    print 'Not present:',storage
+    print('Not present:',storage)
     sys.exit(1)
 if not os.path.isfile(config):
-    print 'Not present:',config
+    print('Not present:',config)
     sys.exit(1)
 
 #
@@ -44,13 +44,13 @@ if not os.path.isfile(config):
 
 files1 = t1.job_files(job_index=jobid)
 if len(files1) == 0:
-    print 'No input files found for job %d' % jobid
+    print('No input files found for job %d' % jobid)
     sys.exit(1)
 t1.close()
 
 files2 = t2.job_files(job_index=jobid)
 if len(files2) == 0:
-    print 'No input files found for job %d' % jobid
+    print('No input files found for job %d' % jobid)
     sys.exit(1)
 t2.close()
 
@@ -58,10 +58,10 @@ JOBDIR_I='tmp_input'
 JOBDIR_O='tmp_output'
 
 if os.path.isdir(JOBDIR_I):
-    print 'ERROR: job temporary input directory already exist!'
+    print('ERROR: job temporary input directory already exist!')
     sys.exit(1)
 if os.path.isdir(JOBDIR_O):
-    print 'ERROR: job temporary output directory already exist!'
+    print('ERROR: job temporary output directory already exist!')
     sys.exit(1)
 
 os.mkdir(JOBDIR_I)
@@ -142,7 +142,7 @@ record_path = record_path.replace('//','/')
 
 # Make sure if it is successful
 if not os.path.isfile(record_path):
-    print 'ERROR: could not locate output @ storage: %s' % record_path
+    print('ERROR: could not locate output @ storage: %s' % record_path)
     os.system('rm -f %s/%s' % (storage,anafile))
     sys.exit(1)
 

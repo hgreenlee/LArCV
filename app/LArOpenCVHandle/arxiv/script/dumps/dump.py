@@ -35,7 +35,7 @@ larbysimg.initialize()
 pygeo   = geo2d.PyDraw()
 
 for event in [23]:
-    print "EVENT IS ",event
+    print("EVENT IS ",event)
     fig,ax=plt.subplots(figsize=(10,10))
     ax.text(-30,75,"Event %d"%event,fontsize=35,color='blue',fontweight='bold')
     ax.plot([-100,100],[-100,100],'-',lw=10,color='black')
@@ -59,8 +59,8 @@ for event in [23]:
 
     for mat in mgr.InputImages():
         img_v.append(pygeo.image(mat))
-    for plane in xrange(3):
-        print "plane : ",plane
+    for plane in range(3):
+        print("plane : ",plane)
         fig,ax=plt.subplots(figsize=(20,20))
 
         shape_img=np.where(img_v[plane]>10.0,1.0,0.0).astype(np.uint8)
@@ -77,11 +77,11 @@ for event in [23]:
 
         compound_v = data._raw_cluster_vv[plane]
 
-        print "clusters size:",compound_v.get_cluster().size()
+        print("clusters size:",compound_v.get_cluster().size())
         for compound in compound_v.get_cluster():
-            print " - atoms size: ",compound.get_atoms().size()
+            print(" - atoms size: ",compound.get_atoms().size())
             for atom in compound.get_atoms():
-                print "-- ctor size: ", atom._ctor.size()
+                print("-- ctor size: ", atom._ctor.size())
                 pts = np.array([[pt.x,pt.y] for pt in atom._ctor])
                 ax.plot(pts[:,0],pts[:,1],'-o')
             for defect in compound.get_defects():
@@ -102,7 +102,7 @@ for event in [23]:
     tickscore0_x=[]
 
     score0_v = alg.TimeBinnedScore0Mean()
-    for idx in xrange(score0_v.size()):
+    for idx in range(score0_v.size()):
         v = score0_v[idx]
         tickscore0_y.append(v)
         tickscore0_x.append(idx*1 + alg.TimeBinMin())
@@ -110,7 +110,7 @@ for event in [23]:
     tickscore1_y=[]
     tickscore1_x=[]
     score1_v = alg.TimeBinnedScore1Mean()
-    for idx in xrange(score1_v.size()):
+    for idx in range(score1_v.size()):
         v = score1_v[idx]
         tickscore1_y.append(v)
         tickscore1_x.append(idx*1 + alg.TimeBinMin())
@@ -137,7 +137,7 @@ for event in [23]:
     ax.plot(tickscore1_x,tickscore1_y,marker='o',linestyle='-',color='blue')
 
     minimum_v = alg.TimeBinnedScoreMinIndex()
-    for idx in xrange(minimum_v.size()):
+    for idx in range(minimum_v.size()):
         xval = tickscore0_x[minimum_v[idx]]
         ax.plot([xval,xval],[ymin,ymax],marker='',linestyle='--',color='black',linewidth=2)
 
@@ -148,7 +148,7 @@ for event in [23]:
     plt.clf()
     plt.close()
 
-    for plane in xrange(3):
+    for plane in range(3):
         fig,ax=plt.subplots(figsize=(20,20),facecolor='w')
         shape_img=np.where(img_v[plane]>10.0,1.0,0.0).astype(np.uint8)
         
@@ -190,14 +190,14 @@ for event in [23]:
             ax.add_patch(c)
 
         minimum_v = alg.TimeBinnedScoreMinIndex()
-        for idx in xrange(minimum_v.size()):
+        for idx in range(minimum_v.size()):
             xval = minimum_v[idx] + alg.TimeBinMin()
             ax.plot([xval,xval],[ymin,ymax],marker='',linestyle='--',color='magenta',linewidth=2)
 
         vtx_vv = ref_data.get_circle_vertex()
 
         vtx_idx=0
-        for vtx_idx in xrange(len(vtx_vv)):
+        for vtx_idx in range(len(vtx_vv)):
             vtx = vtx_vv[vtx_idx][plane]
             ax.plot([vtx.center.x],[vtx.center.y],marker='$\star$',color='yellow',markersize=24)
 
@@ -210,17 +210,17 @@ for event in [23]:
 
     vtx_cluster_data = dm.Data(4)
     for vtx_data in vtx_cluster_data._vtx_cluster_v:
-        print "vtx_data ptr: ",vtx_data
-        for plane in xrange(3):
-            print "plane: ",plane
-            print "... num clusters: ",vtx_data.num_clusters(plane),"... num_pixels: ",vtx_data.num_pixels(plane)
-            print "... num pixel frac: ",vtx_data.num_pixel_fraction(plane)
-        print ""
+        print("vtx_data ptr: ",vtx_data)
+        for plane in range(3):
+            print("plane: ",plane)
+            print("... num clusters: ",vtx_data.num_clusters(plane),"... num_pixels: ",vtx_data.num_pixels(plane))
+            print("... num pixel frac: ",vtx_data.num_pixel_fraction(plane))
+        print("")
 
     iv=-1
     for vtx_data in vtx_cluster_data._vtx_cluster_v:
         iv+=1
-        for plane in xrange(3):
+        for plane in range(3):
         
             fig,ax=plt.subplots(figsize=(20,20),facecolor='w')
 
@@ -241,7 +241,7 @@ for event in [23]:
                 c_=[[pt.x,pt.y] for pt in ctor]
                 c_.append(c_[0])
                 c_=np.array(c_)
-                print plane,c_.shape
+                print(plane,c_.shape)
                 plt.plot(c_[:,0],c_[:,1],'-o')
             
             plt.savefig("%04d_4_%d_%d.png"%(event,iv,plane))

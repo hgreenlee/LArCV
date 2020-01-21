@@ -9,13 +9,13 @@ io.add_in_file(sys.argv[2])
 
 io.initialize()
 
-print
+print()
 
-for x in xrange(larcv.kProductUnknown):
+for x in range(larcv.kProductUnknown):
 
     producers=io.producer_list(x)
 
-    print 'Producer type:',x,'(aka',larcv.ProductName(x),')...'
-    for p in producers: print p
-    print
+    print('Producer type:',x,'(aka',larcv.ProductName(x),')...')
+    for p in producers: print(p)
+    print()
 

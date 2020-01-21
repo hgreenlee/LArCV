@@ -1,4 +1,4 @@
-import commands,os
+import subprocess,os
 
 from random import random, seed
 
@@ -29,14 +29,14 @@ for x in nruns:
     prev_run += x
 
 run_cond = {}
-for key in cmd_temp_m.keys(): run_cond[key]=[]
+for key in list(cmd_temp_m.keys()): run_cond[key]=[]
 
 for run_range in run_range_v:
 
     (low,high) = run_range
     nruns = high - low + 1
 
-    for key in run_cond.keys():
+    for key in list(run_cond.keys()):
 
         factor = factor_m[key]
         needed = nruns / factor
@@ -49,16 +49,16 @@ for run_range in run_range_v:
         run_cond[key].append(chosen)
 
 cmd_m = {}
-for key in cmd_temp_m.keys(): cmd_m[key]=[]
+for key in list(cmd_temp_m.keys()): cmd_m[key]=[]
         
-for key in run_cond.keys():
-    print
-    print key, '# runs chosen:'
+for key in list(run_cond.keys()):
+    print()
+    print(key, '# runs chosen:')
     for l in run_cond[key]:
-        print len(l),
-    print
+        print(len(l), end=' ')
+    print()
 
-    print '# files match:'
+    print('# files match:')
     cmd_temp = cmd_temp_m[key]
     if key == 'extunb':
         for run_range in run_range_v:
@@ -73,19 +73,19 @@ for key in run_cond.keys():
             cmd += ' and %s' % cmd_temp
             cmd_m[key].append(cmd)
 
-for key in cmd_m.keys():
-    print
+for key in list(cmd_m.keys()):
+    print()
     cmd_list = cmd_m[key]
-    print key, '# files chosen:'
+    print(key, '# files chosen:')
     for cmd in cmd_list:
-        print commands.getoutput('samweb list-files "%s" | wc -l' % cmd),
-    print
+        print(subprocess.getoutput('samweb list-files "%s" | wc -l' % cmd), end=' ')
+    print()
     
 
 # create definition
-for key in cmd_m.keys():
-    print
+for key in list(cmd_m.keys()):
+    print()
     cmd_list = cmd_m[key]
-    for x in xrange(len(cmd_list)):
+    for x in range(len(cmd_list)):
         cmd = cmd_list[x]
-        print commands.getoutput('samweb -e uboone create-definition wireop_supera_larlite_%s_v2_part%02d_input "%s"' % (key,x,cmd))
+        print(subprocess.getoutput('samweb -e uboone create-definition wireop_supera_larlite_%s_v2_part%02d_input "%s"' % (key,x,cmd)))

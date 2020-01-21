@@ -1,10 +1,10 @@
-from cv2blur import CV2Blur
-from cv2nothing import CV2Nothing
-from cv2add import CV2Add
-from cv2multiply import CV2Multiply
-from cv2gausblur import CV2GausBlur
-from cv2copypaste import CV2CopyPaste
-from cv2zero import CV2Zero
+from .cv2blur import CV2Blur
+from .cv2nothing import CV2Nothing
+from .cv2add import CV2Add
+from .cv2multiply import CV2Multiply
+from .cv2gausblur import CV2GausBlur
+from .cv2copypaste import CV2CopyPaste
+from .cv2zero import CV2Zero
 
 class CV2Selector(object):
 
@@ -20,7 +20,7 @@ class CV2Selector(object):
         self.selection = None
 
     def select(self, name):
-        assert name in self.selections.keys()
+        assert name in list(self.selections.keys())
         self.selection = self.selections[name]
 
     def apply(self, image):

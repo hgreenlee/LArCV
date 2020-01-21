@@ -5,7 +5,7 @@ from larcv import larcv
 
 if len(sys.argv) not in [3,5]:
 
-   print 'Usage: python',sys.argv[0],'CONFIG_FILE OUTPUT_FILE_NAME [NU_FILE_LIST COSMIC_FILE_LIST]'
+   print('Usage: python',sys.argv[0],'CONFIG_FILE OUTPUT_FILE_NAME [NU_FILE_LIST COSMIC_FILE_LIST]')
    sys.exit(1)
 
 proc = larcv.MergeTwoStream()
@@ -17,11 +17,11 @@ proc.override_output_file(sys.argv[2])
 if len(sys.argv) == 5:
    flist1,flist2 = (None,None)
    if not os.path.isfile(sys.argv[3]): 
-      print 'NU_FILELIST does not exist: ', sys.argv[2]
+      print('NU_FILELIST does not exist: ', sys.argv[2])
       sys.exit(1)
 
    if not os.path.isfile(sys.argv[4]): 
-      print 'NU_FILELIST does not exist: ', sys.argv[4]
+      print('NU_FILELIST does not exist: ', sys.argv[4])
       sys.exit(1)
 
    vlist1 = ROOT.std.vector('string')()

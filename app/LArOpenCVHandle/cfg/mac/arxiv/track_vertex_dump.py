@@ -14,7 +14,7 @@ import numpy as np
 proc = larcv.ProcessDriver('ProcessDriver')
 
 CFG="../reco_track.cfg"
-print "Loading config... ",CFG
+print("Loading config... ",CFG)
 proc.configure(CFG)
 flist=ROOT.std.vector('std::string')()
 flist.push_back("/Users/vgenty/Desktop/numu_8000.root")
@@ -32,12 +32,12 @@ larbysimg_ana.SetManager(larbysimg.Manager())
 proc.override_ana_file("/tmp/test.root")
 proc.initialize()
 
-for event in xrange(0,100):
+for event in range(0,100):
     proc.batch_process(event,1)
 
     if (filter_proc.selected()==False): continue
 
-    print event
+    print(event)
 
     
     mgr=larbysimg.Manager()
@@ -64,7 +64,7 @@ for event in xrange(0,100):
         shower_img_v.append(pygeo.image(mat))
 
 
-    for plane in xrange(len(track_img_v)):
+    for plane in range(len(track_img_v)):
         oshower_img = np.where(oshower_img_v[plane]>10.0,85.0,0.0).astype(np.uint8)
         otrack_img = np.where(otrack_img_v[plane]>10.0,160.0,0.0).astype(np.uint8)
         shower_img = np.where(shower_img_v[plane]>10.0,85.0,0.0).astype(np.uint8)
@@ -84,7 +84,7 @@ for event in xrange(0,100):
         ax1.tick_params(labelsize=20)
         plt.tight_layout()        
         SS="out2/%04d_00_track_shower_%d.png"%(event,plane)
-        print "Saving ",SS
+        print("Saving ",SS)
         plt.savefig(SS)
         plt.cla()
         plt.clf()
@@ -94,8 +94,8 @@ for event in xrange(0,100):
     colors=['red','green','blue','orange','magenta','cyan','pink']
     colors*=10
     plane=0
-    print 'Plane',plane
-    for plane in xrange(3):
+    print('Plane',plane)
+    for plane in range(3):
         fig,ax=plt.subplots(figsize=(12,12),facecolor='w')
 
         shape_img = track_img_v[plane]
@@ -111,11 +111,11 @@ for event in xrange(0,100):
         cluscomp_v     = dm.Data(1,3+plane).as_vector()
 
         #plot the atomics
-        for cluscomp_id in xrange(cluscomp_v.size()):
+        for cluscomp_id in range(cluscomp_v.size()):
             cluscomp = cluscomp_v[cluscomp_id]
-            for atomic_id in xrange(cluscomp.size()):
+            for atomic_id in range(cluscomp.size()):
                 atomic = cluscomp[atomic_id]
-                pts=[[atomic[p_id].x,atomic[p_id].y] for p_id in xrange(atomic.size())]
+                pts=[[atomic[p_id].x,atomic[p_id].y] for p_id in range(atomic.size())]
                 pts.append(pts[0])
                 pts=np.array(pts)
                 plt.plot(pts[:,0],pts[:,1],'-o',lw=3,color=colors[ix], alpha = 0.5)
@@ -123,7 +123,7 @@ for event in xrange(0,100):
                 
 
         pts_v = np.array([[vertex_seeds_v[i].x,
-                           vertex_seeds_v[i].y] for i in xrange(vertex_seeds_v.size())])
+                           vertex_seeds_v[i].y] for i in range(vertex_seeds_v.size())])
         if pts_v.size>0:
             plt.plot(pts_v[:,0],pts_v[:,1],'*',markersize=20,color='yellow')
 
@@ -141,7 +141,7 @@ for event in xrange(0,100):
         ax.set_aspect(0.8)
         plt.grid()
         SS="out2/%04d_01_atomics_%d.png"%(event,plane)
-        print "Saving ",SS
+        print("Saving ",SS)
         plt.savefig(SS)
         plt.cla()
         plt.clf()
@@ -154,8 +154,8 @@ for event in xrange(0,100):
     colors=['red','green','blue','orange','magenta','cyan','pink']
     colors*=10
     plane=0
-    print 'Plane',plane
-    for plane in xrange(3):
+    print('Plane',plane)
+    for plane in range(3):
         fig,ax=plt.subplots(figsize=(12,12),facecolor='w')
 
         shape_img = track_img_v[plane]
@@ -170,11 +170,11 @@ for event in xrange(0,100):
         vertex_vv  = dm.Data(2,0).as_vector()
         cluscomp_v = dm.Data(1,3+plane).as_vector()
 
-        for cluscomp_id in xrange(cluscomp_v.size()):
+        for cluscomp_id in range(cluscomp_v.size()):
             cluscomp = cluscomp_v[cluscomp_id]
-            for atomic_id in xrange(cluscomp.size()):
+            for atomic_id in range(cluscomp.size()):
                 atomic = cluscomp[atomic_id]
-                pts=[[atomic[p_id].x,atomic[p_id].y] for p_id in xrange(atomic.size())]
+                pts=[[atomic[p_id].x,atomic[p_id].y] for p_id in range(atomic.size())]
                 pts.append(pts[0])
                 pts=np.array(pts)
                 plt.plot(pts[:,0],pts[:,1],'-o',lw=3,color=colors[ix], alpha = 0.5)
@@ -182,9 +182,9 @@ for event in xrange(0,100):
 
 
         pts_v = np.array([[vertex_vv[i].cvtx2d_v[plane].center.x,
-                           vertex_vv[i].cvtx2d_v[plane].center.y] for i in xrange(vertex_vv.size())])
+                           vertex_vv[i].cvtx2d_v[plane].center.y] for i in range(vertex_vv.size())])
         if pts_v.size>0:
-            print "Vertex Candidates @\n",pts_v
+            print("Vertex Candidates @\n",pts_v)
             plt.plot(pts_v[:,0],pts_v[:,1],'*',markersize=30,color='cyan')
 
 
@@ -205,7 +205,7 @@ for event in xrange(0,100):
         plt.tick_params(labelsize=20)
         ax.set_aspect(0.8)
         SS="out2/%04d_02_vertex_%d.png"%(event,plane)
-        print "Saving ",SS
+        print("Saving ",SS)
         plt.savefig(SS)
         plt.cla()
         plt.clf()
@@ -221,7 +221,7 @@ for event in xrange(0,100):
     tickscore0_x=[]
 
     score0_v = alg.TimeBinnedScore0Mean()
-    for idx in xrange(score0_v.size()):
+    for idx in range(score0_v.size()):
         v = score0_v[idx]
         tickscore0_y.append(v)
         tickscore0_x.append(idx*1 + alg.TimeBinMin())
@@ -229,7 +229,7 @@ for event in xrange(0,100):
     tickscore1_y=[]
     tickscore1_x=[]
     score1_v = alg.TimeBinnedScore1Mean()
-    for idx in xrange(score1_v.size()):
+    for idx in range(score1_v.size()):
         v = score1_v[idx]
         tickscore1_y.append(v)
         tickscore1_x.append(idx*1 + alg.TimeBinMin())
@@ -251,7 +251,7 @@ for event in xrange(0,100):
 
     minimum_v  = alg.TimeBinnedScoreMinIndex()
     minrange_v = alg.TimeBinnedScoreMinRange()
-    for idx in xrange(minimum_v.size()):
+    for idx in range(minimum_v.size()):
         xval = tickscore0_x[minimum_v[idx]]
         plt.plot([xval,xval],[0,360],marker='',linestyle='--',color='black',linewidth=2)
         xstart = tickscore0_x[minrange_v[idx].first]
@@ -268,7 +268,7 @@ for event in xrange(0,100):
     plt.grid()
     #ax.set_xlim(450,480)
     SS="out2/%04d_03_score_%d.png"%(event,plane)
-    print "Saving ",SS
+    print("Saving ",SS)
     plt.savefig(SS)
     plt.cla()
     plt.clf()

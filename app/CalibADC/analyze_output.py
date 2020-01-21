@@ -34,7 +34,7 @@ for p in range(startplane,endplane):
         tree.Draw("peak>>%s"%(histname),"planeid==%d && wireid==%d"%(p,ch))
         chhists[(p,ch)] = hch
         hch.Write()
-        print "filled: ",(p,ch),": ",hch.Integral()
+        print("filled: ",(p,ch),": ",hch.Integral())
         c.Update()
         if hch.Integral()>500 and hch.GetMean()>125:
             fit.SetParameter(0,hch.GetMaximum())
@@ -47,7 +47,7 @@ for p in range(startplane,endplane):
             m = fit.GetParameter(1)
             s = fit.GetParameter(2)
             if m<0:
-                print "bad fit ch=%d"%(ch),m
+                print("bad fit ch=%d"%(ch),m)
                 # use the mean
                 m = hch.GetMean()
                 s = hch.GetRMS()
@@ -73,5 +73,5 @@ for p in range(startplane,endplane):
     gsigmas[p].Write( "gsigma_plane%d"%(p) )
 
 
-print "Number of hists: ",len(chhists)
+print("Number of hists: ",len(chhists))
 

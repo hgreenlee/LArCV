@@ -19,7 +19,7 @@ cch = rt.TCanvas("cch","cch", 1200,1200)
 cch.Divide(1,3)
 
 fout = open("chbych_scaling.txt",'w')
-print>>fout,"plane\tchannel\tdata\tmc\tscale\tbadmask"
+print("plane\tchannel\tdata\tmc\tscale\tbadmask", file=fout)
 
 graphs = []
 planenames = {0:"U",
@@ -64,11 +64,11 @@ for p in range(0,3):
         # check for refit
         hdata.GetXaxis().SetRange( dminbin, 100 )
         if (p==0 and (data>190 or data<120)) or (p==1 and (data>200 or data<90)):
-            print "refit plane ",p,", ch=",ch,
+            print("refit plane ",p,", ch=",ch, end=' ')
             if hdata.Integral()<500:
                 gdata.SetPoint( ch, gdata.GetX()[ch], 0.0 )
                 data = 0.0
-                print
+                print()
             else:
                 f1 = rt.TF1("refit_p%d_ch%d"%(p,ch),"gaus")
                 f1.SetParameter(1,dmaxf)
@@ -80,7 +80,7 @@ for p in range(0,3):
                     fitmin = hdata.GetXaxis().GetBinCenter(dminbin)
                 hdata.Fit(f1,"RQ0","",fitmin,fitmax)
                 mean = f1.GetParameter(1)
-                print ": data=",data," fit=",mean," mcmean=",mc," dmax=",dmax," dmaxbin=",dmaxbin," dmaxf=",dmaxf
+                print(": data=",data," fit=",mean," mcmean=",mc," dmax=",dmax," dmaxbin=",dmaxbin," dmaxf=",dmaxf)
                 gdata.SetPoint( ch, gdata.GetX()[ch], mean )
                 data = mean
                 if data<0:
@@ -93,7 +93,7 @@ for p in range(0,3):
             #    global_scales[p]
             #chscalings[(p,ch)] = data/mc
             chscalings[(p,ch)] = data/(mc*mc_scale[p])
-        print>>fout,"%d\t%d\t%.2f\t%.2f\t%.2f\t%d"%(p,ch,data,mc,chscalings[(p,ch)],badmask[(p,ch)])
+        print("%d\t%d\t%.2f\t%.2f\t%.2f\t%d"%(p,ch,data,mc,chscalings[(p,ch)],badmask[(p,ch)]), file=fout)
         hdata.GetXaxis().SetRange(1,500)
     gdata.GetYaxis().SetRangeUser(0,220)
 
@@ -155,6 +155,6 @@ for p in range(0,3):
 ctot.Draw()
 ctot.Update()
 
-raw_input()
+input()
 
 

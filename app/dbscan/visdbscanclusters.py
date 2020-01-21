@@ -32,7 +32,7 @@ class VisDBScanClusters:
 
         cluster_vecs = [] # output container
 
-        for iimg in xrange(0,lcv_imgs.size()):
+        for iimg in range(0,lcv_imgs.size()):
             lcv_img = lcv_imgs.at(iimg)
 
             meta = lcv_img.meta()
@@ -42,17 +42,17 @@ class VisDBScanClusters:
 
             img += 0.1 # to help with float to int rounding
             maxid = int(np.amax( img ))
-            print "number of clusters: ",type(maxid)
+            print("number of clusters: ",type(maxid))
 
-            for ic in xrange(1,maxid): # skip nothing label
+            for ic in range(1,maxid): # skip nothing label
                 hits = np.argwhere( np.logical_and( img>(ic), img<ic+1) )
                 nhits = len(hits)
                 if nhits==0:
                     continue
-                print "clusterid=",ic," number of hits=",nhits
+                print("clusterid=",ic," number of hits=",nhits)
                 x = np.zeros( len(hits) )
                 y = np.zeros( len(hits) )
-                for ihit in xrange(0,len(hits)):
+                for ihit in range(0,len(hits)):
 
                     x[ihit] = meta.pos_x( hits[ihit][0] )
                     y[ihit] = meta.pos_y( hits[ihit][1] )
@@ -69,6 +69,6 @@ class VisDBScanClusters:
                                          symbol='o',symbolPen=pg.mkPen(color=color,width=0.0) )
 
                 cluster_vecs.append(plot)
-        print "number of cluster plots: ",len(cluster_vecs)
+        print("number of cluster plots: ",len(cluster_vecs))
         return cluster_vecs
             

@@ -57,15 +57,15 @@ while True:
     divider.getregionwires( bbox[0], bbox[1], bbox[2], bbox[3], ywires, uwires, vwires)
 
     if uwires.size()<2 or vwires.size()<2 or ywires.size()<2:
-        print "invalid box: ",bbox
-        print "[ENTER] to continue."
-        raw_input()
+        print("invalid box: ",bbox)
+        print("[ENTER] to continue.")
+        input()
         continue
 
     # draw U wires
-    print "U bounds: [",uwires.at(0),",",uwires.back(),"]"
-    print "V bounds: [",vwires.at(0),",",vwires.back(),"]"
-    print "Y bounds: [",ywires.at(0),",",ywires.back(),"]"
+    print("U bounds: [",uwires.at(0),",",uwires.back(),"]")
+    print("V bounds: [",vwires.at(0),",",vwires.back(),"]")
+    print("Y bounds: [",ywires.at(0),",",ywires.back(),"]")
 
     uwire0 = uwires.at(0)
     uwire0_start = std.vector('float')()
@@ -134,5 +134,5 @@ while True:
 
     c.Update()
 
-    print "[ENTER] to continue."
-    raw_input()
+    print("[ENTER] to continue.")
+    input()

@@ -4,22 +4,13 @@ from .. import np
 import abc
 
 
-class WhitePlotImage(object):
-    __metaclass__ = abc.ABCMeta
-
-    # notes
-    # work_mat is the ndarray representation of image2d data
-    # orig is the 3 channels we will manipulate on the screen
-    # plot_mat is modified to have overlays
-    # when loading, we manip orig_mat to have the orientation we want
-    # before going to caffe, __revert_image__ is called to rearrange the image
-    
+class WhitePlotImage(object, metaclass=abc.ABCMeta):
     def __init__(self, img_v, roi_v, planes):
 
-        self.imgs = [img_v[i] for i in xrange(img_v.size())]
+        self.imgs = [img_v[i] for i in range(img_v.size())]
 
         if roi_v is not None:
-            self.roi_v = [roi_v[i] for i in xrange(roi_v.size())]
+            self.roi_v = [roi_v[i] for i in range(roi_v.size())]
 
         # list of QWidgets which user can choose the channel to go into RGB
         self.planes = None
@@ -31,7 +22,7 @@ class WhitePlotImage(object):
         ometa = None
         comp_x,comp_y = (1,1)
         #for img in self.imgs
-        for img in [self.imgs[2] for _ in xrange(3)]:
+        for img in [self.imgs[2] for _ in range(3)]:
             if ometa == None:
                 ometa  = larcv.ImageMeta(img.meta())
                 comp_x = ometa.width() / ometa.cols()
@@ -79,7 +70,7 @@ class WhitePlotImage(object):
         self.caffe_image = None
 
     def __create_mat(self):
-        print self.work_mat.shape
+        print(self.work_mat.shape)
         # load all the images into working matrix
         for ix, img in enumerate(self.img_v):
             self.work_mat[:, :, ix] = self.img_v[2]
@@ -162,10 +153,10 @@ class WhitePlotImage(object):
         self.plot_mat[:,:,2] = BB
 
         #get the new maximum
-        newmax = [ np.max(self.plot_mat[:,:,i]) for i in xrange(3) ]
+        newmax = [ np.max(self.plot_mat[:,:,i]) for i in range(3) ]
 
 
-        for i in xrange(3):
+        for i in range(3):
             self.plot_mat[:,:,i] /= newmax[i]
             self.plot_mat[:,:,i] *= 255
 
@@ -177,7 +168,7 @@ class WhitePlotImage(object):
         
         
         if NEU == 1:
-            print ""
+            print("")
             div0 = 150.0
             div1 = 100.0
             #div2 = 50.0
@@ -234,7 +225,7 @@ class WhitePlotImage(object):
     # swap channels that are shown
     def swap_plot_mat(self,imin,imax,newchs):
 
-        print "swap channels to: ", newchs
+        print("swap channels to: ", newchs)
 
         # store the original matrix into the working matrix
         self.__store_orig_mat()
@@ -272,7 +263,7 @@ class WhitePlotImage(object):
             # the bounding boxes
             r['bbox'] = []
 
-            for iy in xrange(nbb):
+            for iy in range(nbb):
                 bb = roi.BB()[iy]
                 r['bbox'].append(bb)
 
@@ -302,7 +293,7 @@ class WhitePlotImage(object):
 
     # reset the presets if there are any in this product
     def reset_presets(self):
-        for key,val in self.presets.iteritems():
+        for key,val in self.presets.items():
             self.preset_layout.removeWidget(val)
             val.setParent(None)
         self.presets = {}

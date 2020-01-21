@@ -1,4 +1,4 @@
-from whiteplotimage import WhitePlotImage
+from .whiteplotimage import WhitePlotImage
 from .. import np
 from .. import QtGui
 import pandas as pd

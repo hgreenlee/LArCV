@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 from proddb.table import table
 from proddb.dbenv import *
-import sys,commands,os
+import sys,subprocess,os
 from subprocess import Popen, PIPE
 
 in_project=sys.argv[1]
 t=table(in_project)
 if not t.exist():
-    print 'Project does not exist:',sys.argv[1]
+    print('Project does not exist:',sys.argv[1])
     sys.exit(1)
 jobid  = int(sys.argv[2])
 session = t.job_session(job_index=jobid)
@@ -25,10 +25,10 @@ if len(sys.argv) > 5:
     out_project = sys.argv[5]
 
 if not os.path.isdir(storage):
-    print 'Not present:',storage
+    print('Not present:',storage)
     sys.exit(1)
 if not os.path.isfile(config):
-    print 'Not present:',config
+    print('Not present:',config)
     sys.exit(1)
 
 #
@@ -37,7 +37,7 @@ if not os.path.isfile(config):
 
 files = t.job_files(job_index=jobid)
 if len(files) == 0:
-    print 'No input files found for job %d' % session
+    print('No input files found for job %d' % session)
     sys.exit(1)
 
 t.close()
@@ -46,10 +46,10 @@ JOBDIR_I='tmp_input'
 JOBDIR_O='tmp_output'
 
 if os.path.isdir(JOBDIR_I):
-    print 'ERROR: job temporary input directory already exist!'
+    print('ERROR: job temporary input directory already exist!')
     sys.exit(1)
 if os.path.isdir(JOBDIR_O):
-    print 'ERROR: job temporary output directory already exist!'
+    print('ERROR: job temporary output directory already exist!')
     sys.exit(1)
 
 os.mkdir(JOBDIR_I)
@@ -129,22 +129,22 @@ my_proc.set_data_to_write(fmwk.data.kChStatus,       "chstatus")
 
 my_proc.enable_filter()
 
-print
-print  "Finished configuring ana_processor. Start event loop!"
-print
+print()
+print("Finished configuring ana_processor. Start event loop!")
+print()
 
 # Let's run it.
 my_proc.run()
 
 # done!
-print
-print "Finished running ana_processor event loop!"
-print
+print()
+print("Finished running ana_processor event loop!")
+print()
 
 # transfer LARCV FILE
 ret=1
 try:
-    print 'Transferring output: %s/%s => %s' % (JOBDIR_O,LC_outfile,storage)
+    print('Transferring output: %s/%s => %s' % (JOBDIR_O,LC_outfile,storage))
     ret=os.system('scp %s/%s %s' % (JOBDIR_O,LC_outfile,storage))
     if ret:
         raise OSError    
@@ -156,7 +156,7 @@ except OSError as e:
 # transfer LARLITE FILE
 ret=1
 try:
-    print 'Transferring output: %s/%s => %s' % (JOBDIR_O,LL_outfile,storage)
+    print('Transferring output: %s/%s => %s' % (JOBDIR_O,LL_outfile,storage))
     ret=os.system('scp %s/%s %s' % (JOBDIR_O,LL_outfile,storage))
     if ret:
         raise OSError    
@@ -172,17 +172,17 @@ LL_record_path = LL_record_path.replace('//','/')
 
 # Make sure if it is successful
 if not os.path.isfile(LC_record_path):
-    print 'ERROR: could not locate larcv output @ storage: %s' % LC_record_path
+    print('ERROR: could not locate larcv output @ storage: %s' % LC_record_path)
     sys.exit(1)
 else:
-    print 'SUCCESS: confirmed larcv output @ storage: %s' % LC_record_path
+    print('SUCCESS: confirmed larcv output @ storage: %s' % LC_record_path)
 
 # Make sure if it is successful
 if not os.path.isfile(LL_record_path):
-    print 'ERROR: could not locate larlite output @ storage: %s' % LL_record_path
+    print('ERROR: could not locate larlite output @ storage: %s' % LL_record_path)
     sys.exit(1)
 else:
-    print 'SUCCESS: confirmed larlite output @ storage: %s' % LL_record_path
+    print('SUCCESS: confirmed larlite output @ storage: %s' % LL_record_path)
 
 t=table(in_project)
 if out_project:

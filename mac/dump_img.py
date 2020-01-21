@@ -19,7 +19,7 @@ if len(sys.argv) > 4:
     start = int(sys.argv[3])
     cutoff = int(sys.argv[4])
 
-for entry in xrange(img_ch.GetEntries()):
+for entry in range(img_ch.GetEntries()):
     if entry<start: continue
     img_ch.GetEntry(entry)
     img_br=None

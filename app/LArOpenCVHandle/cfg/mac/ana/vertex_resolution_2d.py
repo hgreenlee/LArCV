@@ -32,13 +32,13 @@ for name, row in sig_good_vtx_df.reset_index().set_index(base_index).iterrows():
 dw_v=np.vstack(dt_v)
 dt_v=np.vstack(dw_v)
 
-for i in xrange(3):
+for i in range(3):
     fig,ax=plt.subplots(figsize=(10,6))
     ax.hist(dw_v[:,i],
             label='Plane {}'.format(i),
             bins=np.arange(-20,20+1,1),
             alpha=0.5)
-    print i,np.mean(dw_v[:,i]),np.std(dw_v[:,i])
+    print(i,np.mean(dw_v[:,i]),np.std(dw_v[:,i]))
     ax.set_xlabel("(MC - Reco) Wire [pixel]",fontweight='bold')
     ax.set_ylabel("Count / pixel",fontweight='bold')
 
@@ -51,13 +51,13 @@ for i in xrange(3):
     plt.show()
     
 
-for i in xrange(3):
+for i in range(3):
     fig,ax=plt.subplots(figsize=(10,6))
     ax.hist(dt_v[:,i],
             label='Plane {}'.format(i),
             bins=np.arange(-20,20+1,1),
             alpha=0.5)
-    print i,np.mean(dt_v[:,i]),np.std(dt_v[:,i])
+    print(i,np.mean(dt_v[:,i]),np.std(dt_v[:,i]))
     ax.set_xlabel("(MC - Reco) Time [pixel]",fontweight='bold')
     (ymin,ymax)=ax.get_ylim()
     ax.vlines(-7,ymin,ymax,lw=2,color='orange',alpha=0.7)
@@ -68,7 +68,7 @@ for i in xrange(3):
     plt.show()
     
     
-for i in xrange(3):
+for i in range(3):
     fig,ax=plt.subplots(figsize=(10,6))
     ax.hist(np.sqrt(np.power(dw_v[:,i],2)+np.power(dt_v[:,i],2)),
             label='Plane {}'.format(i),

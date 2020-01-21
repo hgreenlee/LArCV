@@ -35,10 +35,10 @@ p.initialize()
 
 if not o.initialize():
     sys.exit(ERROR_WRITE_INIT)
-for idx in xrange(NUM_EVENT):
+for idx in range(NUM_EVENT):
 
     img = larcv.Image2D(10,10)
-    for x in xrange(img.as_vector().size()):
+    for x in range(img.as_vector().size()):
         if x%2 == 0: img.set_pixel(x,larcv.kROIEminus)
         else: img.set_pixel(x,larcv.kROIGamma)
         

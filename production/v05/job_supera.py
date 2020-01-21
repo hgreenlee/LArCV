@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 from proddb.table import table
 from proddb.dbenv import *
-import sys,commands,os
+import sys,subprocess,os
 from subprocess import Popen, PIPE
 
 in_project=sys.argv[1]
 t=table(in_project)
 if not t.exist():
-    print 'Project does not exist:',sys.argv[1]
+    print('Project does not exist:',sys.argv[1])
     sys.exit(1)
 jobid  = int(sys.argv[2])
 session = t.job_session(job_index=jobid)
@@ -25,10 +25,10 @@ if len(sys.argv) > 5:
     out_project = sys.argv[5]
 
 if not os.path.isdir(storage):
-    print 'Not present:',storage
+    print('Not present:',storage)
     sys.exit(1)
 if not os.path.isfile(config):
-    print 'Not present:',config
+    print('Not present:',config)
     sys.exit(1)
 
 #
@@ -37,7 +37,7 @@ if not os.path.isfile(config):
 
 files = t.job_files(job_index=jobid)
 if len(files) == 0:
-    print 'No input files found for job %d' % session
+    print('No input files found for job %d' % session)
     sys.exit(1)
 
 t.close()
@@ -46,10 +46,10 @@ JOBDIR_I='tmp_input'
 JOBDIR_O='tmp_output'
 
 if os.path.isdir(JOBDIR_I):
-    print 'ERROR: job temporary input directory already exist!'
+    print('ERROR: job temporary input directory already exist!')
     sys.exit(1)
 if os.path.isdir(JOBDIR_O):
-    print 'ERROR: job temporary output directory already exist!'
+    print('ERROR: job temporary output directory already exist!')
     sys.exit(1)
 
 os.mkdir(JOBDIR_I)
@@ -92,17 +92,17 @@ unit.supera_fname('%s/%s' % (JOBDIR_O,outfile))
 my_proc.add_process(unit)
 
 
-print
-print  "Finished configuring ana_processor. Start event loop!"
-print
+print()
+print("Finished configuring ana_processor. Start event loop!")
+print()
 
 # Let's run it.
 my_proc.run()
 
 # done!
-print
-print "Finished running ana_processor event loop!"
-print
+print()
+print("Finished running ana_processor event loop!")
+print()
 
 ret=1
 try:
@@ -119,7 +119,7 @@ record_path = record_path.replace('//','/')
 
 # Make sure if it is successful
 if not os.path.isfile(record_path):
-    print 'ERROR: could not locate output @ storage: %s' % record_path
+    print('ERROR: could not locate output @ storage: %s' % record_path)
     sys.exit(1)
 
 t=table(in_project)

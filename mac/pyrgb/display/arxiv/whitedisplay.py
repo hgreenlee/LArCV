@@ -193,7 +193,7 @@ class WhiteDisplay(QtGui.QWidget):
         try:
             import cv2
         except:
-            print "No OpenCV. Disabling."
+            print("No OpenCV. Disabling.")
             self.rgbcv2.setEnabled(False)
 
         self.rgbcaffe.setFixedWidth(130)
@@ -204,8 +204,8 @@ class WhiteDisplay(QtGui.QWidget):
 
         # Particle types
         self.kTypes = {'kBNB':   (self.kBNB, [2]),
-                       'kOTHER': (self.kOTHER, [i for i in xrange(10) if i != 2]),
-                       'kBOTH':  (self.kBOTH, [i for i in xrange(10)])}
+                       'kOTHER': (self.kOTHER, [i for i in range(10) if i != 2]),
+                       'kBOTH':  (self.kBOTH, [i for i in range(10)])}
 
         # The current image array, useful for getting meta
         self.image = None
@@ -249,7 +249,7 @@ class WhiteDisplay(QtGui.QWidget):
             self.caffe_layout = CaffeLayout(self.caffe_test,self)
             self.caffe_enabled = True
         except:
-            print "Caffe Disabled"
+            print("Caffe Disabled")
             self.caffe_enabled = False
             self.rgbcaffe.setEnabled(False)
 
@@ -524,7 +524,7 @@ class WhiteDisplay(QtGui.QWidget):
             if event > 1400 or event == 416:
                 # x,y below are relative coordinate of bounding-box w.r.t.
                 # image in original unit
-                print a
+                print(a)
                 bbminx = a['x1']
                 bbminy = a['y1']
                 bbmaxx = a['x2']
@@ -579,9 +579,9 @@ class WhiteDisplay(QtGui.QWidget):
             
         elif self.particle_dboxes is not None: #not neu
             
-            print self.particle_dboxes
+            print(self.particle_dboxes)
             a = self.particle_dboxes.query('entry == {}'.format(event)).sort_values(by='prob',ascending=False).iloc[0]
-            print a
+            print(a)
             bbminx = a['x1']
             bbminy = a['y1']
             bbmaxx = a['x2']
@@ -695,7 +695,7 @@ class WhiteDisplay(QtGui.QWidget):
             ymin = 99999
             ymax = 0
             
-            for ix in xrange(len(xx)):
+            for ix in range(len(xx)):
                 x = xx[ix]
                 y = yy[ix]
 
@@ -744,11 +744,11 @@ class WhiteDisplay(QtGui.QWidget):
                 ti = pg.TextItem(text=store.particle_types[roi_p['type']])
                 ti.setPos(x * dw_i, (y + h_b) * dh_i + 1)
 
-                print x * dw_i, y * dh_i, w_b * dw_i, h_b * dh_i
+                print(x * dw_i, y * dh_i, w_b * dw_i, h_b * dh_i)
                 
                 
                 if len(roi_p['bbox']) == 3 and self.NEU==0:
-                    print "aho1"
+                    print("aho1")
                     xx.append( x*dw_i )
                     xx.append( ( x+w_b )*dw_i )
                     yy.append( y*dh_i )
@@ -768,7 +768,7 @@ class WhiteDisplay(QtGui.QWidget):
                 self.boxes.append(r1)
 
             if len(roi_p['bbox']) == 3 and self.NEU==0:
-                print "AHO"
+                print("AHO")
                 xmin,ymin,xmax,ymax = union(xx,yy)
                 r1 = HoverRect(xmin,
                                ymin,
@@ -800,7 +800,7 @@ class WhiteDisplay(QtGui.QWidget):
     # through caffe_layout.py
     def load_current_image(self):
 
-        print "Loading current image!"
+        print("Loading current image!")
         
         # revert the image back to Image2D.nd_array style
         self.image.revert_image()
@@ -828,8 +828,8 @@ class WhiteDisplay(QtGui.QWidget):
         else: # get it from the max and min value of image
             self.iimin = self.image.iimin
             self.imin.setText(str(self.iimin))
-            print "Setting self.imin text {}=>{}".format(self.image.iimin,self.iimin)
+            print("Setting self.imin text {}=>{}".format(self.image.iimin,self.iimin))
             self.iimax = self.image.iimax
             self.imax.setText(str(self.iimax))
-            print "Setting self.imax text {}=>{}".format(self.image.iimax,self.iimax)
+            print("Setting self.imax text {}=>{}".format(self.image.iimax,self.iimax))
             

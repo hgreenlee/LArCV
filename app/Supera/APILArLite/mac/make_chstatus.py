@@ -24,21 +24,21 @@ unit=fmwk.ChStatusFinder()
 unit._out_producer="data"
 unit._in_producer="data"
 # Set input root file
-for x in xrange(len(sys.argv)-1):
+for x in range(len(sys.argv)-1):
     unit._io.add_in_file(sys.argv[x+1])
 my_proc.add_process(unit)
 
 
-print
-print  "Finished configuring ana_processor. Start event loop!"
-print
+print()
+print("Finished configuring ana_processor. Start event loop!")
+print()
 
 # Let's run it.
 my_proc.run(0,5)
 
 # done!
-print
-print "Finished running ana_processor event loop!"
-print
+print()
+print("Finished running ana_processor event loop!")
+print()
 
 sys.exit(0)

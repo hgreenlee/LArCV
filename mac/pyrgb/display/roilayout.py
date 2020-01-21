@@ -6,8 +6,8 @@ from ..lib.iomanager import IOManager
 from .. import larcv
 
 import os
-from crosshairs import CrossHairs
-from LabelingTool import LabelingTool
+from .crosshairs import CrossHairs
+from .LabelingTool import LabelingTool
 
 class ROIToolLayout(QtGui.QGridLayout):
 
@@ -99,9 +99,9 @@ class ROIToolLayout(QtGui.QGridLayout):
         # Pointer to current list of images for computing ROI
         self.images = images
 
-        print
-        print self.images
-        print
+        print()
+        print(self.images)
+        print()
 
         # Pointer to the current list of events
         self.event = event # what is this variable?
@@ -165,11 +165,11 @@ class ROIToolLayout(QtGui.QGridLayout):
 
     def setImages( self, event_key, images ):
         """ parent widget of the ROI tool sends in new event and images through this function. """
-        print "event index",event_key[0]
+        print("event index",event_key[0])
         self.run = event_key[1]
         self.subrun = event_key[2]
         self.event_num = event_key[3]
-        print self.run,self.subrun,self.event_num
+        print(self.run,self.subrun,self.event_num)
         self.images = images
         #print self.images.img_v
         #for img in self.images.img_v:
@@ -192,15 +192,15 @@ class ROIToolLayout(QtGui.QGridLayout):
         # get the maximum key
         max_ = 0
 
-        for event, rois in self.user_rois.iteritems():
+        for event, rois in self.user_rois.items():
             if int(event) > max_: max_ = event
-            print event, max_
+            print(event, max_)
             
         max_+=1
 
-        for event in xrange(max_):
+        for event in range(max_):
 
-            if not event in self.captured_rse_map.keys():
+            if not event in list(self.captured_rse_map.keys()):
                 continue
 
             if len(self.labeltools.stored_labels)>0:
@@ -211,7 +211,7 @@ class ROIToolLayout(QtGui.QGridLayout):
             # STORE ROIs
             
             # If this event doesn't have an ROI, save a blank and continue
-            if event not in self.user_rois.keys():
+            if event not in list(self.user_rois.keys()):
                 if event in self.user_rois_src_rse and self.save_roi_RSE.isChecked():
                     rse = self.user_rois_src_rse[event]
                     self.ou_iom.set_id( rse[0], rse[1], rse[2] )
@@ -230,7 +230,7 @@ class ROIToolLayout(QtGui.QGridLayout):
             # if event has a stored run, subrun, event. put it in here
             elif event in self.user_rois_src_rse and self.save_roi_RSE.isChecked():
                 rse = self.user_rois_src_rse[event]
-                print "storing ROIs for ",rse
+                print("storing ROIs for ",rse)
                 self.ou_iom.set_id( rse[0], rse[1], rse[2] )
             # no RSE, put a 1 in the subrun to indicate one exists
             elif event not in self.user_rois_src_rse or not self.save_roi_RSE.isChecked():
@@ -247,27 +247,27 @@ class ROIToolLayout(QtGui.QGridLayout):
                 vertex_array = self.ou_iom.get_data(larcv.kProductPixel2D,'vertex_%s' % self.output_prod)
                 for larcv_vertex2d in self.user_vertices_larcv[event]:
                     if larcv_vertex2d != (None,None,None):
-                        print "storing ",larcv_vertex2d
+                        print("storing ",larcv_vertex2d)
                         for p,vert in enumerate( larcv_vertex2d ):
                             vertex_array.Append( p, vert )
 
             # Are there labeling images?
             if event in self.labeltools.stored_labels:
-                print "storing labels for event=",event,
+                print("storing labels for event=",event, end=' ')
                 pixelclusters = self.labelimg2pixelcluster( self.labeltools.stored_labels[event] )
                 for p,pixelcluster in enumerate( pixelclusters ):
-                    print " plane=",p,":",pixelcluster.size()," ",
+                    print(" plane=",p,":",pixelcluster.size()," ", end=' ')
                     label_array.Append( p, pixelcluster )
             elif event not in self.labeltools.stored_labels and len(self.labeltools.stored_labels)>0:
-                print "inserting empty pixelclusters"
+                print("inserting empty pixelclusters")
                 # make empty pixelclusters
-                for p in xrange(0,3):
+                for p in range(0,3):
                     pc = larcv.Pixel2DCluster()
                     label_array.Append( p, pc )
                 
             # Save them to the tree
             out_rse = self.captured_rse_map[event]
-            print 'Saving RSE =',out_rse
+            print('Saving RSE =',out_rse)
             self.ou_iom.set_id(out_rse[0],out_rse[1],out_rse[2])
             self.ou_iom.save_entry()
 
@@ -302,14 +302,14 @@ class ROIToolLayout(QtGui.QGridLayout):
                         rse = ( event_rois.run(), event_rois.subrun(), event_rois.event() )
                         self.imported_rse_dict[rse] = idx
                         idx += 1
-                    print "Number of events with ROIs: ",len(self.imported_rse_dict)
+                    print("Number of events with ROIs: ",len(self.imported_rse_dict))
                 else:
-                    print "Could not find input file: ",input_
+                    print("Could not find input file: ",input_)
         else:
-            print "input roi file already loaded."
+            print("input roi file already loaded.")
 
         if self.ou_iom is not None:
-            print "Already loaded output file."
+            print("Already loaded output file.")
             return
 
         # No ROOT file in the output, return and complain
@@ -337,23 +337,23 @@ class ROIToolLayout(QtGui.QGridLayout):
         if self.dm is not None:
             self.user_rois_src_rse[int(self.event.text())] = ( self.dm.run, self.dm.subrun, self.dm.event )
             
-        print "--- Captured ROIs in Memory ---"
-        print self.user_rois
-        print self.user_rois_larcv
-        print self.user_rois_src_rse
-        print "-------------------------------"
+        print("--- Captured ROIs in Memory ---")
+        print(self.user_rois)
+        print(self.user_rois_larcv)
+        print(self.user_rois_src_rse)
+        print("-------------------------------")
 
     def makeEmptyROI(self):
-        print "Making a blank entry intentionally"""
+        print("Making a blank entry intentionally""")
         event = int(self.event.text())
         self.user_rois[event] = []
         self.user_rois_larcv[event] = None
         self.user_rois_src_rse[event] = ( self.dm.run, self.dm.subrun, self.dm.event )
-        print "--- Captured ROIs in Memory ---"
-        print self.user_rois
-        print self.user_rois_larcv
-        print self.user_rois_src_rse
-        print "-------------------------------"
+        print("--- Captured ROIs in Memory ---")
+        print(self.user_rois)
+        print(self.user_rois_larcv)
+        print(self.user_rois_src_rse)
+        print("-------------------------------")
         
         
     def addROI(self) :
@@ -371,7 +371,7 @@ class ROIToolLayout(QtGui.QGridLayout):
         if self.getCheckedPlanes() == False:
             return
         
-        coords = [ [0,0,ww,hh] for _ in xrange(3)]
+        coords = [ [0,0,ww,hh] for _ in range(3)]
         
         roisg = ROISliderGroup(coords,self.checked_planes,3,store.colors,allow_resize, func_setlabel=self.setROILabel )
 
@@ -383,7 +383,7 @@ class ROIToolLayout(QtGui.QGridLayout):
         self.toggleSameROItime()
 
         if not roisg.fix_vertex_to_bb:
-            print "draw makers",roisg.vertexplot
+            print("draw makers",roisg.vertexplot)
             self.plt.addItem( roisg.vertexplot )
 
     def removeROI(self) :
@@ -449,9 +449,9 @@ class ROIToolLayout(QtGui.QGridLayout):
         return
         
     def reloadROI(self):
-        print "reload ROI"
+        print("reload ROI")
         self.clearROI()
-        print "post-clear num rois: ",len(self.rois)
+        print("post-clear num rois: ",len(self.rois))
 
         event = int(self.event.text())
         rse = ( self.dm.run, self.dm.subrun, self.dm.event  )
@@ -461,23 +461,23 @@ class ROIToolLayout(QtGui.QGridLayout):
         self.event_num = rse[2]
 
         # If no user ROIs, look through imported ROIs
-        if event not in self.user_rois.keys():
+        if event not in list(self.user_rois.keys()):
 
             if rse in self.imported_rse_dict:
-                print "rse in imported list ",rse
+                print("rse in imported list ",rse)
                 idx = self.imported_rse_dict[rse]
                 self.in_iom.read_entry(idx)  
                 roiarray = self.in_iom.get_data(larcv.kProductROI,self.input_prod)
                 self.user_rois_larcv[event] = [roi for roi in roiarray.ROIArray()]
-                print "reloading ",self.user_rois_larcv[event]," from file"
+                print("reloading ",self.user_rois_larcv[event]," from file")
                 self.user_rois[event] = self.larcv2roi(self.user_rois_larcv[event])  
             else:
-                print rse," not in user_rois nor in imported dict."
+                print(rse," not in user_rois nor in imported dict.")
                 return
             
         # set to active rois
         self.rois = self.user_rois[event]
-        print "active rois: ",len(self.rois)
+        print("active rois: ",len(self.rois))
 
         for roisg in self.rois:
             # add bboxes for the planes
@@ -486,7 +486,7 @@ class ROIToolLayout(QtGui.QGridLayout):
                 self.plt.addItem(roi)
             # add vertex markers
             if not roisg.fix_vertex_to_bb:
-                print "draw makers",roisg.vertexplot
+                print("draw makers",roisg.vertexplot)
                 self.plt.addItem( roisg.vertexplot )
     
     # add widgets to self and return 
@@ -540,7 +540,7 @@ class ROIToolLayout(QtGui.QGridLayout):
 
             self.enabled = False
             
-            for i in reversed(range(self.count())):
+            for i in reversed(list(range(self.count()))):
                 self.itemAt(i).widget().setParent(None)
 
 
@@ -598,7 +598,7 @@ class ROIToolLayout(QtGui.QGridLayout):
                                self.labeltools.labels.index("gamma"):larcv.kROIGamma}
         
         clusters = {}
-        for iplane in xrange(0,3):
+        for iplane in range(0,3):
             clusters[iplane] = larcv.Pixel2DCluster()
             if iplane >= len(labelimg):
                 continue
@@ -606,10 +606,10 @@ class ROIToolLayout(QtGui.QGridLayout):
             idx_bg = self.labeltools.labels.index("background")
             idxlabels = (labelmat != idx_bg).nonzero()
             ivertmax = self.images.img_v[iplane].shape[1]-1
-            for ivert in xrange(0,len(idxlabels[0])):
+            for ivert in range(0,len(idxlabels[0])):
                 vert = larcv.Pixel2D( idxlabels[0][ivert], ivertmax - idxlabels[1][ivert] )
                 label = labelmat[ idxlabels[0][ivert], idxlabels[1][ivert] ]
-                print "storing (",vert.X(),",",vert.Y(),") label=", self.labeltools.labels[label]
+                print("storing (",vert.X(),",",vert.Y(),") label=", self.labeltools.labels[label])
                 vert.Intensity( float(self.translator[ label ] ) )
                 clusters[iplane] += vert
 
@@ -674,7 +674,7 @@ class ROIToolLayout(QtGui.QGridLayout):
 
         for roi in rois:
 
-            coords = [None for _ in xrange(3)]
+            coords = [None for _ in range(3)]
 
             bbs = roi.BB()
 
@@ -721,7 +721,7 @@ class ROIToolLayout(QtGui.QGridLayout):
         
     
     def toggleSameROItime(self):
-        print "same time rois: ",self.same_roi_time.isChecked()
+        print("same time rois: ",self.same_roi_time.isChecked())
         for roiset in self.rois:
             if self.same_roi_time.isChecked():
                 roiset.useSameTimes()
@@ -743,14 +743,14 @@ class ROIToolLayout(QtGui.QGridLayout):
                 pass
 
     def enablePlaneCrossHairs(self,plane):
-        print "Enable plane=",plane," cross hairs for vertex selection."
-        print "image pointer in roitool: ",self.plt,self.crosshairs
+        print("Enable plane=",plane," cross hairs for vertex selection.")
+        print("image pointer in roitool: ",self.plt,self.crosshairs)
         #if self.crosshairs is None and self.plt is not None and self.imi is not None:
         if self.crosshairs is None and self.plt is not None:
-            print "create cross hairs on if plt and img exists"
+            print("create cross hairs on if plt and img exists")
             self.crosshairs = [ CrossHairs(self,self.plt,self.imi,x) for x in range(0,3) ]
         if self.crosshairs is not None:
-            print "add cross hairs to image"
+            print("add cross hairs to image")
             self.crosshairs[plane].active = True
             self.plt.addItem( self.crosshairs[plane].vLine,  ignoreBounds=True )
             self.plt.addItem( self.crosshairs[plane].hLine,  ignoreBounds=True )

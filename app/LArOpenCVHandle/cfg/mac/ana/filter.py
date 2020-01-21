@@ -14,7 +14,7 @@ proc = larcv.ProcessDriver('ProcessDriver')
 proc.configure(sys.argv[1])
 
 flist=ROOT.std.vector('std::string')()
-for x in xrange(len(sys.argv)-4):
+for x in range(len(sys.argv)-4):
    flist.push_back(sys.argv[x+4])
 proc.override_input_file(flist)
 

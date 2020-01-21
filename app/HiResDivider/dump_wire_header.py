@@ -71,7 +71,7 @@ for entry in range(nentries):
     edict[ wID ] = arr2
 
 
-print "entries: ",nentries
+print("entries: ",nentries)
 
 header1 = """
 #ifndef __WIREINFODATA__
@@ -91,7 +91,7 @@ startdata = ""
 for plane,data in [('u',ustart),('v',vstart),('y',ystart)]:
     startdata += "  static const float %splaneStart[%d][3] = \n"%(plane,len(data))
     startdata += "  {"
-    wids = data.keys()
+    wids = list(data.keys())
     wids.sort()
     for wid in wids:
         arr = data[wid]
@@ -103,7 +103,7 @@ enddata = ""
 for plane,data in [('u',uend),('v',vend),('y',yend)]:
     enddata += "  static const float %splaneEnd[%d][3] = \n"%(plane,len(data))
     enddata += "  {"
-    wids = data.keys()
+    wids = list(data.keys())
     wids.sort()
     for wid in wids:
         arr = data[wid]
@@ -133,6 +133,6 @@ out = open("WireInfoData.h",'w')
 header = header1 + '\n' + startdata + "\n" + enddata + '\n' + header2 + '\n'
 
 
-print >>out,header
+print(header, file=out)
 
 out.close()

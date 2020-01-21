@@ -43,7 +43,7 @@ class TestWrapper(object):
         
     def load(self):
         self.load_config()
-        print self.config['cafferoot']
+        print(self.config['cafferoot'])
         sys.path.insert(0,self.config['cafferoot'])
         import caffe
         self.caffe = caffe
@@ -85,13 +85,13 @@ class TestWrapper(object):
             self.iom.read_entry(0)
             means  = self.iom.get_data(larcv.kProductImage2D,self.config['meanproducer'])
             self.mean_v = [ larcv.as_ndarray(img) for img in means.Image2DArray() ]
-            print "Mean channels=",len(self.mean_v)," mean size=",self.mean_v[0].shape
+            print("Mean channels=",len(self.mean_v)," mean size=",self.mean_v[0].shape)
             for ix,m in enumerate(self.mean_v): 
-                print "means of mean {} : {}".format(ix,m.mean())
+                print("means of mean {} : {}".format(ix,m.mean()))
 
 
         for ix,mean in enumerate(self.mean_v):
-            print "check mean shape againts: ",im[:,:,ix].shape
+            print("check mean shape againts: ",im[:,:,ix].shape)
             assert mean.shape == im[:,:,ix].shape
             im[:,:,ix] -= mean
         
@@ -109,17 +109,17 @@ class TestWrapper(object):
         
         im = self.prep_image()
         
-        print "FORWARD ON IMAGE: ",im.shape
+        print("FORWARD ON IMAGE: ",im.shape)
 
         blob['data'] = np.zeros((1, im.shape[0], im.shape[1], im.shape[2]),dtype=np.float32)
-        print blob['data'].shape
+        print(blob['data'].shape)
 
         blob['data'][0,:,:,:] = im
 
         channel_swap = (0, 3, 1, 2)
         blob['data'] = blob['data'].transpose(channel_swap)  
 
-        print blob['data'].shape
+        print(blob['data'].shape)
 
         blob['label'] = np.zeros((1,),dtype=np.float32)
         
@@ -133,10 +133,10 @@ class TestWrapper(object):
         scores  =  self.net.blobs[ self.config['lastfc'] ].data
 
         self.scores = scores
-        print "Scores:  {}".format(scores)
+        print("Scores:  {}".format(scores))
 
         if "save_datablob" in self.config and self.config["save_datablob"]==True:
-            print "SAVING DATA BLOB TO FILE"
+            print("SAVING DATA BLOB TO FILE")
             # we dump the data array the network has in it's blob to a numpy binary file
             # this is useful for sanity-checks
             if not hasattr(self,'data_numpy_outfile'):
@@ -147,7 +147,7 @@ class TestWrapper(object):
         
     def __generate_model__(self):
         
-        print "\t>> Got an image of shape: {}".format(self.pimg.shape)
+        print("\t>> Got an image of shape: {}".format(self.pimg.shape))
         td = ""
         td += "input: \"data\"\n"
         td += "input_shape: { dim: 1 dim: %d dim: %s dim: %s } \n"%(self.nchannels,

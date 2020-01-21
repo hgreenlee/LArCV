@@ -10,7 +10,7 @@ roiListName = "extBNB_AnalysisTrees_cosmic_trained_only_on_mc_score_0.99"
 larcvPath = "/Users/erezcohen/Desktop/uBoone/EXTBNB_DATA/larcv_files"
 larcvName = "extBNB9131runs_cosmic_trained_only_on_mc_pscore_0.99_1598evts_23aug2016"
 
-print "\n running on \n" + roiListPath + "/passedGBDT_" + roiListName + ".csv \n"
+print("\n running on \n" + roiListPath + "/passedGBDT_" + roiListName + ".csv \n")
 DoPrintLoop = True
 DoPrintOuts = True
 
@@ -81,7 +81,7 @@ def roi2imgcord(imm,size,pos,img_coordinates=True):
 ferez = open( roiListPath + "/passedGBDT_" + roiListName + ".csv",'r') # input list of ROI boxes...
 lerez = ferez.readlines()
 
-print "read lines from \n" + roiListPath + "/passedGBDT_" + roiListName + ".csv \n"
+print("read lines from \n" + roiListPath + "/passedGBDT_" + roiListName + ".csv \n")
 
 img = image_def()
 
@@ -95,7 +95,7 @@ for l in lerez[1:]:
     subrun = int(info[1].strip())
     event = int(info[2].strip())
     
-    print "r/s/e: ",run , subrun , event
+    print("r/s/e: ",run , subrun , event)
     
     # make ROIs: U,V,Y = R,G,B in viewer
     # instead of the original Y-plane ROI, i loop over all 3 planes and create 3 ROIs
@@ -121,7 +121,7 @@ for l in lerez[1:]:
         dt = y2-y1
         dw = x2-x1
         if DoPrintLoop:
-            print "dw: ",dw,", dt: ",dt
+            print("dw: ",dw,", dt: ",dt)
 
         if plane==0:        # U-plane
 
@@ -139,12 +139,12 @@ for l in lerez[1:]:
             ysize = (dw,dt)
 
         else :
-            print "\nerror: couldn't find this plane!\n"
+            print("\nerror: couldn't find this plane!\n")
 
         roi = larcv.ROI()
         if DoPrintLoop:
-            print "Filling: ",rse
-            print "plane %d: ROI [(%.0f,%.0f)->(%.0f,%.0f)]"%(plane,x1,y1,x2,y2)
+            print("Filling: ",rse)
+            print("plane %d: ROI [(%.0f,%.0f)->(%.0f,%.0f)]"%(plane,x1,y1,x2,y2))
 
 
 
@@ -157,7 +157,7 @@ for l in lerez[1:]:
     roi_dict[rse].Append(roi)
 
 
-print "Number of entries: ",len(roi_dict)
+print("Number of entries: ",len(roi_dict))
 
 
 # Now, open proton file and an output file.
@@ -171,7 +171,7 @@ input.initialize()
 output.set_out_file( larcvPath + "/roi_files/roi_" + larcvName + ".root" )
 output.initialize()
 
-for entry in xrange( input.get_n_entries() ):
+for entry in range( input.get_n_entries() ):
 #for entry in xrange( 10 ): # for debug
     input.read_entry( entry )
     
@@ -188,20 +188,20 @@ for entry in xrange( input.get_n_entries() ):
         #        print "Transfer ROIs for event (%d of %d): "%(entry,input.get_n_entries()),in_rse
         eventroi = roi_dict[in_rse]
         if DoPrintOuts:
-            print "Transfer ",in_rse
+            print("Transfer ",in_rse)
         #            print "out_event_roi: ",len(out_event_roi)
 
         for roi in eventroi.ROIArray():
             out_event_roi.Append( roi )
 
     else:
-        print "missing event ",in_rse
+        print("missing event ",in_rse)
 #        raise ValueError("Missing Event: ",in_rse)
 
     output.save_entry()
 
 output.finalize()
 
-print "wrote ouput root file: \n" + larcvPath + "/roi_files/roi_" + larcvName + ".root"
+print("wrote ouput root file: \n" + larcvPath + "/roi_files/roi_" + larcvName + ".root")
     
 

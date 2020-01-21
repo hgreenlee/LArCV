@@ -34,9 +34,9 @@ o.set_out_file(OUT_FNAME)
 if not o.initialize():
     sys.exit(ERROR_WRITE_INIT)
 
-for idx in xrange(NUM_EVENT):
+for idx in range(NUM_EVENT):
 
-    for product_type in xrange(larcv.kProductUnknown):
+    for product_type in range(larcv.kProductUnknown):
 
         o.get_data(product_type,"product_type%02d" % product_type)
 
@@ -58,14 +58,14 @@ if not i.initialize():
 
 product_ctr={}
 entry_ctr=0
-for idx in xrange(NUM_EVENT):
+for idx in range(NUM_EVENT):
 
     if not i.read_entry(idx):
         break
     
     entry_ctr += 1
 
-    for product_type in xrange(larcv.kProductUnknown):
+    for product_type in range(larcv.kProductUnknown):
 
         if product_type not in product_ctr:
             product_ctr[product_type] = 0
@@ -79,7 +79,7 @@ if not entry_ctr == NUM_EVENT:
     cmsg.error("Read-back only found %d/%d events!" % (entry_ctr,NUM_EVENT))
     sys.exit(ERROR_ENTRY_MISSING)
     
-for t,ctr in product_ctr.iteritems():
+for t,ctr in product_ctr.items():
     if not ctr == NUM_EVENT:
         cmsg.error("Product type %d (name %s) only has %d/%d count!" % (t,larcv.ProductName(t),ctr,NUM_EVENT))
         sys.exit(ERROR_PRODUCT_MISSING)

@@ -46,34 +46,34 @@ def pick_good_vertex(sb_mc_tree,sb_vtx_tree,signal_df_m):
         n_close_vtx = len(close_vtx)
         
         if DEBUG:
-            print 
-            print "Entry ",entry
-            print "vtx_x_vv ",vtx_x_vv
-            print "vtx_y_vv ",vtx_y_vv
-            print "dx ",dx
-            print "dy ",dy
-            print "dt ",dt
-            print "min_idx ",min_idx_v
-            print "multi_v ",vtx_entry.multi_v
-            print "a ",a
-            print "b ",b
-            print "c ",c
-            print "dt_b ",dt_b
-            print "close vtx ",close_vtx
+            print() 
+            print("Entry ",entry)
+            print("vtx_x_vv ",vtx_x_vv)
+            print("vtx_y_vv ",vtx_y_vv)
+            print("dx ",dx)
+            print("dy ",dy)
+            print("dt ",dt)
+            print("min_idx ",min_idx_v)
+            print("multi_v ",vtx_entry.multi_v)
+            print("a ",a)
+            print("b ",b)
+            print("c ",c)
+            print("dt_b ",dt_b)
+            print("close vtx ",close_vtx)
             
         good_vtx_sb_v[index]  = n_close_vtx>0
 
         min_idx=min_idx_v[0]
 
         if DEBUG:
-            print "Set min_idx ",min_idx
+            print("Set min_idx ",min_idx)
             
         if n_close_vtx>1:
             for vtx_id in close_vtx:
                 if np.sum(vtx_entry.multi_v.values[vtx_id]==2)>=2:
                     min_idx=vtx_id
                     if DEBUG:
-                        print "Set min_idx ",vtx_id
+                        print("Set min_idx ",vtx_id)
         good_vtx_id_v[index]  = vtx_entry.id.values[min_idx]
 
     good_vtx_sb_v  = pd.Series(good_vtx_sb_v)
@@ -122,7 +122,7 @@ def energy_plotter(sig_mctree_s,sig_mctree_t,Emin,Emax,deltaE,key,Name):
     eff_v_   =[]
     signal_v_=[]
     energy_v_=[]
-    for ix in xrange(eff_v.size):
+    for ix in range(eff_v.size):
         if ix in res_v:
             eff_vv.append(np.array(eff_v_))
             signal_vv.append(np.array(signal_v_))
@@ -186,7 +186,7 @@ def angle_plotter(data1,data2,Tmin,Tmax,deltaT,Name):
     signal_v_=[]
     angle_v_ =[]
 
-    for ix in xrange(eff_v.size):
+    for ix in range(eff_v.size):
         if ix in res_v:
             eff_vv.append(np.array(eff_v_))
             signal_vv.append(np.array(signal_v_))

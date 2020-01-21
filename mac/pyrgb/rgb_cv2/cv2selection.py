@@ -2,9 +2,7 @@ import abc
 from .. import QtGui
 
 
-class CV2Selection(object):
-    __metaclass__ = abc.ABCMeta
-
+class CV2Selection(object, metaclass=abc.ABCMeta):
     def __init__(self):
         self.name = "CV2Selection"
         self.options = {}
@@ -16,16 +14,16 @@ class CV2Selection(object):
 
     def set_options(self, options):
         for op in options:
-            assert op in self.options.keys()
+            assert op in list(self.options.keys())
             self.options[op] = options[op]
 
     def apply(self, image):
         return self.__implement__(image)
 
     def dump(self):
-        print "\t name: {}".format(self.name)
-        print "\t options: {}".format(self.options)
-        print "\t types: {}".format(self.types)
+        print("\t name: {}".format(self.name))
+        print("\t options: {}".format(self.options))
+        print("\t types: {}".format(self.types))
 
     @abc.abstractmethod
     def __description__(self):

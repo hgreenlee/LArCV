@@ -98,4 +98,4 @@ angle_plotter(true_opening_plane_2,
 signal_last_bin = true_opening_plane_2[true_opening_plane_2>=(1-deltaT)]
 reco_last_bin   = reco_opening_plane_2[reco_opening_plane_2>=(1-deltaT)]
 bad_index = signal_last_bin.drop(reco_last_bin.index).index
-print list(signal_df_m["MCTree"].ix[bad_index].entry.values)
+print(list(signal_df_m["MCTree"].ix[bad_index].entry.values))

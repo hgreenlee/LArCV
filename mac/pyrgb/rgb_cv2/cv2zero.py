@@ -1,5 +1,5 @@
-from cv2selection import CV2Selection
-from cv2selection import QtGui
+from .cv2selection import CV2Selection
+from .cv2selection import QtGui
 
 
 class CV2Zero(CV2Selection):

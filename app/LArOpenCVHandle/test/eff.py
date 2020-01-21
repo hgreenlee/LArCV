@@ -4,7 +4,7 @@ INDIR=sys.argv[1]
 DIR=os.path.basename(INDIR)
 
 SS="cp %s %s"%("lee1e1p_ana.cfg",INDIR)
-print SS
+print(SS)
 os.system(SS)
 os.chdir(INDIR)
 
@@ -12,7 +12,7 @@ os.chdir(INDIR)
 # SS="run_processor test.cfg c_out*.root %s"%os.path.join(BASEDIR,"larcv_fcn_out*.root")
 
 SS="run_processor lee1e1p_ana.cfg c_comb*.root"
-print SS
+print(SS)
 os.system(SS)
 
 

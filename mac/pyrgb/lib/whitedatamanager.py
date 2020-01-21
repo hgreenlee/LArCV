@@ -4,8 +4,8 @@ import time, re
 from .. import ROOT
 from .. import larcv
 
-from iomanager import IOManager
-from whiteimagefactory import WhiteImageFactory
+from .iomanager import IOManager
+from .whiteimagefactory import WhiteImageFactory
 
 # data manger helps get the producers from the ROOT file
 # as well as manage factory creation of images as the user
@@ -22,7 +22,7 @@ class WhiteDataManager(object):
         
         # get keys from rootfile, iterate over the enum
         # and see what's in the root file
-        for i in xrange(larcv.kProductUnknown):
+        for i in range(larcv.kProductUnknown):
             product = larcv.ProductName(i)
 
             self.keys[product] = []

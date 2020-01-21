@@ -18,17 +18,17 @@ from ..lib.hoverrect import HoverRect
 from ..lib.roislider import ROISlider
 
 try:
-    from cv2layout import CV2Layout
+    from .cv2layout import CV2Layout
 except:
     pass
 
 try:
-    from caffelayout import CaffeLayout
+    from .caffelayout import CaffeLayout
     from ..rgb_caffe.testwrapper import TestWrapper
 except:
     pass
 
-from roilayout import ROIToolLayout
+from .roilayout import ROIToolLayout
 
 import pyqtgraph.exporters
 
@@ -222,7 +222,7 @@ class RGBDisplay(QtGui.QWidget):
         try:
             import cv2
         except:
-            print "No OpenCV. Disabling."
+            print("No OpenCV. Disabling.")
             self.rgbcv2.setEnabled(False)
 
         self.rgbcaffe.setFixedWidth(130)
@@ -236,8 +236,8 @@ class RGBDisplay(QtGui.QWidget):
         
         # Particle types
         self.kTypes = {'kBNB':   (self.kBNB, [0,2]),
-                       'kOTHER': (self.kOTHER, [i for i in xrange(10) if i != 2]),
-                       'kBOTH':  (self.kBOTH, [i for i in xrange(10)])}
+                       'kOTHER': (self.kOTHER, [i for i in range(10) if i != 2]),
+                       'kBOTH':  (self.kBOTH, [i for i in range(10)])}
 
         # The current image array, useful for getting meta
         self.image = None
@@ -275,7 +275,7 @@ class RGBDisplay(QtGui.QWidget):
             self.caffe_layout = CaffeLayout(self.caffe_test,self)
             self.caffe_enabled = True
         except:
-            print "Caffe Disabled"
+            print("Caffe Disabled")
             self.caffe_enabled = False
             self.rgbcaffe.setEnabled(False)
 
@@ -284,7 +284,7 @@ class RGBDisplay(QtGui.QWidget):
         try:
             self.cv2_layout = CV2Layout()
         except:
-            print "no CV2"
+            print("no CV2")
             self.cv2_layout = None
             pass
         self.cv2_enabled = False
@@ -303,7 +303,7 @@ class RGBDisplay(QtGui.QWidget):
         # -----------------------------------------------------------------------------
         self.event_base_and_images = {}
         self.rse_map = {}
-        print "len(self.event_base_and_images): ",len(self.event_base_and_images)
+        print("len(self.event_base_and_images): ",len(self.event_base_and_images))
 
 
 
@@ -320,11 +320,11 @@ class RGBDisplay(QtGui.QWidget):
     # erez
     def prepare_rse_navigation(self):
         if len(self.rse_map)==0:
-            print "preparing R/S/E navigation...."
+            print("preparing R/S/E navigation....")
             self.dm.get_all_images(self.image_producer,self.event_base_and_images,self.rse_map)
-            rselist = self.rse_map.keys()
+            rselist = list(self.rse_map.keys())
             rselist.sort()
-            print rselist
+            print(rselist)
             if self.run.text()=="-1" and self.subrun.text()=="-1" and self.event_num.text()=="-1" and len(rselist)>0:
                 self.run.setText("%d"%(rselist[0][0]))
                 self.subrun.setText("%d"%(rselist[0][1]))
@@ -709,7 +709,7 @@ class RGBDisplay(QtGui.QWidget):
                 ti = pg.TextItem(text=larcv.ROIType2String(roi_p['type']))
                 ti.setPos(x * dw_i, (y + h_b) * dh_i + 1)
 
-                print str(self.event.text()),x * dw_i, y * dh_i, w_b * dw_i, h_b * dh_i,"\n"
+                print(str(self.event.text()),x * dw_i, y * dh_i, w_b * dw_i, h_b * dh_i,"\n")
 
                 r1 = HoverRect(x * dw_i,
                                y * dh_i,
@@ -743,7 +743,7 @@ class RGBDisplay(QtGui.QWidget):
     # through caffe_layout.py
     def load_current_image(self):
 
-        print "Loading current image!"
+        print("Loading current image!")
         
         # revert the image back to Image2D.nd_array style
         self.image.revert_image()
@@ -783,7 +783,7 @@ class RGBDisplay(QtGui.QWidget):
         exporter.parameters()['height'] = 700 
         exporter.export('R{}_S{}_E{}.png'.format(str(self.run.text()),str(self.subrun.text()),str(self.event.text())))
 #        exporter.export('saved_image_{}_{}.png'.format(str(self.event.text()),self.savecounter))
-        print "Saved image {}".format(self.savecounter)
+        print("Saved image {}".format(self.savecounter))
         self.savecounter += 1
 
     def setImage( self, img ):

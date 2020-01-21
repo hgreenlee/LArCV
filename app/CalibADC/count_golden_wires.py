@@ -50,28 +50,28 @@ for l in lchbych[1:]:
     else:
         for wire in range( wid*4, (wid+1)*4 ):
             if wire < maxwires[plane]:
-                print >>badchlist,wire,'\t',planes[plane]
+                print(wire,'\t',planes[plane], file=badchlist)
 
 badchlist.close()
 
-print "NGOOD:"
-print "U-plane: ",ngood[0],"(",ngood[0]*4.0/2400.0*100.0,"%%)"
-print "V-plane: ",ngood[1],"(",ngood[1]*4.0/2400.0*100.0,"%%)"
-print "Y-plane: ",ngood[2],"(",ngood[2]*4.0/3456.0*100.0,"%%)"
+print("NGOOD:")
+print("U-plane: ",ngood[0],"(",ngood[0]*4.0/2400.0*100.0,"%%)")
+print("V-plane: ",ngood[1],"(",ngood[1]*4.0/2400.0*100.0,"%%)")
+print("Y-plane: ",ngood[2],"(",ngood[2]*4.0/3456.0*100.0,"%%)")
 
-print "TOTAL: ",ngood[0]+ngood[1]+ngood[2]," (",4.0*(ngood[0]+ngood[1]+ngood[2])/(2400+2400+3456.0)*100.0,"%%)"
+print("TOTAL: ",ngood[0]+ngood[1]+ngood[2]," (",4.0*(ngood[0]+ngood[1]+ngood[2])/(2400+2400+3456.0)*100.0,"%%)")
 
 # Fit scale distributions
 
-print "SCALE FACTOR PEAK"
+print("SCALE FACTOR PEAK")
 for p in range(0,3):
     scalehists[p].Fit("gaus","R","",0.3, 1.5)
 
-print "MC PEAKS"
+print("MC PEAKS")
 for p in range(0,3):
     peakmeans[("mc",p)].Fit("gaus","R","",50, 200)
 
-print "DATA PEAKS"
+print("DATA PEAKS")
 for p in range(0,3):
     peakmeans[("data",p)].Fit("gaus","R","",50, 200)
 
@@ -111,5 +111,5 @@ c.Update()
 
 c.SaveAs("ScaleFactorsDist.png")
 
-raw_input()
+input()
     

@@ -16,7 +16,7 @@ for entry in deflist:
         if line.split(":")[0].strip()=="Event Count":
             file_entries = int( line.split(":")[1].strip() )
             totentries += file_entries
-            print entry.strip(),": ",file_entries," TOTAL=",totentries
+            print(entry.strip(),": ",file_entries," TOTAL=",totentries)
             break
 
-print "Total entries: ",totentries
+print("Total entries: ",totentries)

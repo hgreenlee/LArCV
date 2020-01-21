@@ -17,7 +17,7 @@ import numpy as np
 proc = larcv.ProcessDriver('ProcessDriver')
 
 CFG="../reco_shower_true.cfg"
-print "Loading config... ",CFG
+print("Loading config... ",CFG)
 proc.configure(CFG)
 flist=ROOT.std.vector('std::string')()
 flist.push_back("/Users/vgenty/Desktop/nue_8000.root")
@@ -35,13 +35,13 @@ larbysimg_ana.SetManager(larbysimg.Manager())
 proc.override_ana_file("/tmp/test.root")
 proc.initialize()
 
-for event in xrange(0,1000):
+for event in range(0,1000):
 
     proc.batch_process(event,1)
 
     if (filter_proc.selected()==False): continue
 
-    print event
+    print(event)
 
     mgr=larbysimg.Manager()
     pygeo = geo2d.PyDraw()
@@ -67,7 +67,7 @@ for event in xrange(0,1000):
         shower_img_v.append(pygeo.image(mat))
 
 
-    for plane in xrange(len(track_img_v)):
+    for plane in range(len(track_img_v)):
         oshower_img = np.where(oshower_img_v[plane]>10.0,85.0,0.0).astype(np.uint8)
         otrack_img = np.where(otrack_img_v[plane]>10.0,160.0,0.0).astype(np.uint8)
         shower_img = np.where(shower_img_v[plane]>10.0,85.0,0.0).astype(np.uint8)
@@ -87,7 +87,7 @@ for event in xrange(0,1000):
         ax1.tick_params(labelsize=20)
         plt.tight_layout()        
         SS="out/%04d_00_track_shower_%d.png"%(event,plane)
-        print "Saving ",SS
+        print("Saving ",SS)
         plt.savefig(SS)
         plt.cla()
         plt.clf()
@@ -101,15 +101,15 @@ for event in xrange(0,1000):
     dm=mgr.DataManager()
     data=dm.Data(0,0)
     lintrk_v=data.as_vector()
-    print "Found ",lintrk_v.size()," linear track clusters"
+    print("Found ",lintrk_v.size()," linear track clusters")
     strack_n=-1
     for strack in lintrk_v:
         strack_n+=1
         # the only good one...
         e13d=strack.edge1
         e23d=strack.edge2
-        print e13d,e23d
-        for plane in xrange(3):
+        print(e13d,e23d)
+        for plane in range(3):
             strack2d = strack.get_cluster(plane)
             fig,ax=plt.subplots(figsize=(12,12),facecolor='w')
             shape_img = img_v[plane]
@@ -161,9 +161,9 @@ for event in xrange(0,1000):
 
     dm=mgr.DataManager()
     data=dm.Data(3,0)
-    print data
+    print(data)
     for vtx3d in data.as_vector():
-        for plane in xrange(3):
+        for plane in range(3):
             fig,ax=plt.subplots(figsize=(12,12),facecolor='w')
             shape_img = img_v[plane]
             shape_img=np.where(shape_img>0.0,1.0,0.0).astype(np.uint8)
@@ -198,7 +198,7 @@ for event in xrange(0,1000):
     vtx_data=dm.Data(3,0).as_vector()
     
     for vtx in vtx_data:
-        for plane in xrange(3):
+        for plane in range(3):
             fig,ax = plt.subplots(figsize=(12,12),facecolor='w')
             shape_img = img_v[plane]
             shape_img=np.where(shape_img>0.0,1.0,0.0).astype(np.uint8)

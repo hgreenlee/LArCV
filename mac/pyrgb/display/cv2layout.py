@@ -62,7 +62,7 @@ class CV2Layout(QtGui.QGridLayout):
             self.addWidget(self.ow, 1, 1)
             self.addWidget(self.loaded, 2, 0)
 
-        for i in reversed(range(self.count())):
+        for i in reversed(list(range(self.count()))):
             self.itemAt(i).widget().setParent(None)
 
         return self
@@ -84,8 +84,8 @@ class CV2Layout(QtGui.QGridLayout):
     def reLoad(self):
 
         self.changed = True
-        print "reloaded... {} {}".format(str(self.comboBoxSelector.currentText()),
-                                         self.selected)
+        print("reloaded... {} {}".format(str(self.comboBoxSelector.currentText()),
+                                         self.selected))
 
         
         if str(self.comboBoxSelector.currentText()) != self.selected:
@@ -106,7 +106,7 @@ class CV2Layout(QtGui.QGridLayout):
         self.menu = {}
         c = 2
 
-        for label, widget in self.selector.selection.widgets.iteritems():
+        for label, widget in self.selector.selection.widgets.items():
             self.addWidget(widget[0], 0, c) #label
             self.addWidget(widget[1], 1, c) #widget right under
 

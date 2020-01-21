@@ -23,7 +23,7 @@ class VisNNCosineVec:
 
         pixel_vecs = [] # output container
 
-        for iimg in xrange(0,lcv_imgs.size()):
+        for iimg in range(0,lcv_imgs.size()):
             lcv_img = lcv_imgs.at(iimg)
             lcv_hit = lcv_hits.at(iimg)
 
@@ -34,7 +34,7 @@ class VisNNCosineVec:
             
             hits = np.argwhere( hitpx>0.1 )
         
-            print "number of hits: ",len(hits)
+            print("number of hits: ",len(hits))
             vec_data_x = np.zeros( 2*len(hits) ) # we make pair of points for vec
             vec_data_y = np.zeros( 2*len(hits) ) # we make pair of points for vec
             for i,hit in enumerate(hits):

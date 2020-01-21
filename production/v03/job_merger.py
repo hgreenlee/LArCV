@@ -1,23 +1,23 @@
 #!/usr/bin/env python
-import sys,commands,os
+import sys,subprocess,os
 from subprocess import Popen, PIPE
 
 outdir=sys.argv[1]
 config=sys.argv[2]
 
 if not os.path.isdir(outdir):
-    print 'Not present:',outdir
+    print('Not present:',outdir)
     sys.exit(1)
 if not os.path.isfile(config):
-    print 'Not present:',config
+    print('Not present:',config)
     sys.exit(1)
 
 if not os.path.isfile('flist_nu.txt'):
-    print 'Not present: flist_nu.txt'
+    print('Not present: flist_nu.txt')
     sys.exit(1)
 
 if not os.path.isfile('flist_cosmic.txt'):
-    print 'Not present: flist_cosmic.txt'
+    print('Not present: flist_cosmic.txt')
     sys.exit(1)
 
 nu_files = [] 
@@ -52,10 +52,10 @@ outfile = 'overlay_%04d_%04d.root' % (min_proc,max_proc)
 
 cmd = 'python run_merger.py %s %s nu.txt cosmic.txt' % (config,outfile)
 
-print cmd
+print(cmd)
 p=Popen(cmd.split(),stdout=PIPE,stderr=PIPE)
 (out,err) = p.communicate()
-print out
+print(out)
 
 os.system('scp %s %s' % (outfile,outdir))
 

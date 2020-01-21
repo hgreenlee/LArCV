@@ -22,7 +22,7 @@ processed=True
 if truth=="true":
     processed=False
     
-print "Loading config... ",CFG
+print("Loading config... ",CFG)
 proc.configure(CFG)
 flist=ROOT.std.vector('std::string')()
 flist.push_back("/Users/vgenty/Desktop/nue_8000.root")
@@ -40,14 +40,14 @@ larbysimg_ana.SetManager(larbysimg.Manager())
 proc.override_ana_file("/tmp/test.root")
 proc.initialize()
 
-for event in xrange(0,1000):
+for event in range(0,1000):
 #for event in xrange(156,156+1):
 #for event in xrange(85,85+1):
     proc.batch_process(event,1)
 
     if (filter_proc.selected()==False): continue
 
-    print "Event is... ",event
+    print("Event is... ",event)
     
     mgr=larbysimg.Manager()
     pygeo = geo2d.PyDraw()
@@ -72,7 +72,7 @@ for event in xrange(0,1000):
     for mat in mgr.InputImages(2):
         shower_img_v.append(pygeo.image(mat))
 
-    for plane in xrange(len(track_img_v)):
+    for plane in range(len(track_img_v)):
         oshower_img = np.where(oshower_img_v[plane]>10.0,85.0,0.0).astype(np.uint8)
         otrack_img = np.where(otrack_img_v[plane]>10.0,160.0,0.0).astype(np.uint8)
         shower_img = np.where(shower_img_v[plane]>10.0,85.0,0.0).astype(np.uint8)
@@ -91,7 +91,7 @@ for event in xrange(0,1000):
             ax2.set_xlabel('Time [6 ticks]',fontsize=20)
             
         ax2.imshow(img,cmap='jet',interpolation='none',vmin=0.,vmax=255.)
-        print oimg.shape,img.shape
+        print(oimg.shape,img.shape)
         ax2.set_xlabel('Time [6 ticks]',fontsize=20)
         ax2.set_xlim(0,512)
         ax2.set_ylim(0,512)
@@ -105,8 +105,8 @@ for event in xrange(0,1000):
     colors=['red','green','blue','orange','magenta','cyan','pink']
     colors*=10
     plane=0
-    print 'Plane',plane
-    for plane in xrange(3):
+    print('Plane',plane)
+    for plane in range(3):
         fig,ax=plt.subplots(figsize=(12,12),facecolor='w')
 
         shape_img = track_img_v[plane]
@@ -122,11 +122,11 @@ for event in xrange(0,1000):
         cluscomp_v     = dm.Data(1,3+plane).as_vector()
 
         #plot the atomics
-        for cluscomp_id in xrange(cluscomp_v.size()):
+        for cluscomp_id in range(cluscomp_v.size()):
             cluscomp = cluscomp_v[cluscomp_id]
-            for atomic_id in xrange(cluscomp.size()):
+            for atomic_id in range(cluscomp.size()):
                 atomic = cluscomp[atomic_id]
-                pts=[[atomic[p_id].x,atomic[p_id].y] for p_id in xrange(atomic.size())]
+                pts=[[atomic[p_id].x,atomic[p_id].y] for p_id in range(atomic.size())]
                 pts.append(pts[0])
                 pts=np.array(pts)
                 plt.plot(pts[:,0],pts[:,1],'-o',lw=3,color=colors[ix], alpha = 0.5)
@@ -134,7 +134,7 @@ for event in xrange(0,1000):
                 
 
         pts_v = np.array([[vertex_seeds_v[i].x,
-                           vertex_seeds_v[i].y] for i in xrange(vertex_seeds_v.size())])
+                           vertex_seeds_v[i].y] for i in range(vertex_seeds_v.size())])
         if pts_v.size>0:
             plt.plot(pts_v[:,0],pts_v[:,1],'*',markersize=20,color='yellow')
 
@@ -152,7 +152,7 @@ for event in xrange(0,1000):
         ax.set_aspect(0.8)
         plt.grid()
         SS="out3/%04d_01_atomics_%d.png"%(event,plane)
-        print "Saving ",SS
+        print("Saving ",SS)
         plt.savefig(SS)
         plt.cla()
         plt.clf()
@@ -165,8 +165,8 @@ for event in xrange(0,1000):
     colors=['red','green','blue','orange','magenta','cyan','pink']
     colors*=10
     plane=0
-    print 'Plane',plane
-    for plane in xrange(3):
+    print('Plane',plane)
+    for plane in range(3):
         fig,ax=plt.subplots(figsize=(12,12),facecolor='w')
 
         shape_img = track_img_v[plane]
@@ -181,11 +181,11 @@ for event in xrange(0,1000):
         vertex_vv  = dm.Data(2,0).as_vector()
         cluscomp_v = dm.Data(1,3+plane).as_vector()
 
-        for cluscomp_id in xrange(cluscomp_v.size()):
+        for cluscomp_id in range(cluscomp_v.size()):
             cluscomp = cluscomp_v[cluscomp_id]
-            for atomic_id in xrange(cluscomp.size()):
+            for atomic_id in range(cluscomp.size()):
                 atomic = cluscomp[atomic_id]
-                pts=[[atomic[p_id].x,atomic[p_id].y] for p_id in xrange(atomic.size())]
+                pts=[[atomic[p_id].x,atomic[p_id].y] for p_id in range(atomic.size())]
                 pts.append(pts[0])
                 pts=np.array(pts)
                 plt.plot(pts[:,0],pts[:,1],'-o',lw=3,color=colors[ix], alpha = 0.5)
@@ -193,9 +193,9 @@ for event in xrange(0,1000):
 
 
         pts_v = np.array([[vertex_vv[i].cvtx2d_v[plane].center.x,
-                           vertex_vv[i].cvtx2d_v[plane].center.y] for i in xrange(vertex_vv.size())])
+                           vertex_vv[i].cvtx2d_v[plane].center.y] for i in range(vertex_vv.size())])
         if pts_v.size>0:
-            print "Vertex Candidates @\n",pts_v
+            print("Vertex Candidates @\n",pts_v)
             plt.plot(pts_v[:,0],pts_v[:,1],'*',markersize=30,color='cyan')
 
 
@@ -216,7 +216,7 @@ for event in xrange(0,1000):
         plt.tick_params(labelsize=20)
         ax.set_aspect(0.8)
         SS="out3/%04d_02_vertex_%d.png"%(event,plane)
-        print "Saving ",SS
+        print("Saving ",SS)
         plt.savefig(SS)
         plt.cla()
         plt.clf()
@@ -232,7 +232,7 @@ for event in xrange(0,1000):
     tickscore0_x=[]
 
     score0_v = alg.TimeBinnedScore0Mean()
-    for idx in xrange(score0_v.size()):
+    for idx in range(score0_v.size()):
         v = score0_v[idx]
         tickscore0_y.append(v)
         tickscore0_x.append(idx*1 + alg.TimeBinMin())
@@ -240,7 +240,7 @@ for event in xrange(0,1000):
     tickscore1_y=[]
     tickscore1_x=[]
     score1_v = alg.TimeBinnedScore1Mean()
-    for idx in xrange(score1_v.size()):
+    for idx in range(score1_v.size()):
         v = score1_v[idx]
         tickscore1_y.append(v)
         tickscore1_x.append(idx*1 + alg.TimeBinMin())
@@ -262,7 +262,7 @@ for event in xrange(0,1000):
 
     minimum_v  = alg.TimeBinnedScoreMinIndex()
     minrange_v = alg.TimeBinnedScoreMinRange()
-    for idx in xrange(minimum_v.size()):
+    for idx in range(minimum_v.size()):
         xval = tickscore0_x[minimum_v[idx]]
         plt.plot([xval,xval],[0,360],marker='',linestyle='--',color='black',linewidth=2)
         xstart = tickscore0_x[minrange_v[idx].first]
@@ -279,7 +279,7 @@ for event in xrange(0,1000):
     plt.grid()
     #ax.set_xlim(450,480)
     SS="out3/%04d_03_score_%d.png"%(event,plane)
-    print "Saving ",SS
+    print("Saving ",SS)
     plt.savefig(SS)
     plt.cla()
     plt.clf()
@@ -291,13 +291,13 @@ for event in xrange(0,1000):
     vtx_data=dm.Data(2,0).as_vector()
 
     #Simply a list of VertexCluster (i.e. vertex-wise list of clusters)
-    print "There are ",vtx_data.size(),"vertex found in this event. Note that this is vertex-wise"
+    print("There are ",vtx_data.size(),"vertex found in this event. Note that this is vertex-wise")
     ix=-1
     for vtx in vtx_data:
         ix+=1
-        print "<===================Start Vertex3D number ",ix," ==========================>"
+        print("<===================Start Vertex3D number ",ix," ==========================>")
         cvtx_v = vtx.cvtx2d_v
-        for plane in xrange(3):
+        for plane in range(3):
             cvtx = cvtx_v[plane]
             fig,ax = plt.subplots(figsize=(12,12),facecolor='w')
             shape_img = img_v[plane]
@@ -318,11 +318,11 @@ for event in xrange(0,1000):
             ax.plot(cvtx.center.x,cvtx.center.y,'o',color='red',markersize=10)
             circl=matplotlib.patches.Circle((cvtx.center.x,cvtx.center.y),
                                             cvtx.radius,fc='none',ec='cyan',lw=5,alpha=0.5)
-            print "Vertex ",ix," plane ",plane,"..."
+            print("Vertex ",ix," plane ",plane,"...")
             for xs in cvtx.xs_v:
-                print  "xs @ [",xs.pt.x,",",xs.pt.y,"]"
+                print("xs @ [",xs.pt.x,",",xs.pt.y,"]")
                 ax.plot(xs.pt.x,xs.pt.y,'o',color='orange',markersize=10,alpha=0.7)
-            print
+            print()
             ax.add_patch(circl)
             
             ax.set_aspect(1.0)
@@ -334,13 +334,13 @@ for event in xrange(0,1000):
             plt.tick_params(labelsize=20)
             plt.grid()
             SS="out3/%04d_04_particle_%d_%d.png"%(event,ix,plane)
-            print "Saving ",SS
+            print("Saving ",SS)
             plt.savefig(SS)
             plt.cla()
             plt.clf()
             plt.close()
 
-        print "<===================End   Vertex3D number ",ix," ==========================>"
+        print("<===================End   Vertex3D number ",ix," ==========================>")
     #["LinearTrackFinder","SuperClusterMaker","ShowerVertexSeeds","ShowerVertexEstimate"]
     dm=mgr.DataManager()
     colors=['red','green','blue','orange','magenta','cyan','pink']
@@ -349,16 +349,16 @@ for event in xrange(0,1000):
     dm=mgr.DataManager()
     data=dm.Data(5,0)
     lintrk_v=data.as_vector()
-    print "Found ",lintrk_v.size()," linear track clusters"
+    print("Found ",lintrk_v.size()," linear track clusters")
     strack_n=-1
     for strack in lintrk_v:
         strack_n+=1
-        print "<===================Start LinearTrack number ",strack_n," ==========================>"
+        print("<===================Start LinearTrack number ",strack_n," ==========================>")
         # the only good one...
         e13d=strack.edge1
         e23d=strack.edge2
-        print e13d,e23d
-        for plane in xrange(3):
+        print(e13d,e23d)
+        for plane in range(3):
             strack2d = strack.get_cluster(plane)
             fig,ax=plt.subplots(figsize=(12,12),facecolor='w')
             shape_img = img_v[plane]
@@ -406,17 +406,17 @@ for event in xrange(0,1000):
             plt.cla()
             plt.clf()
             plt.close()
-        print "<===================End   LinearTrack number ",strack_n," ==========================>"
+        print("<===================End   LinearTrack number ",strack_n," ==========================>")
         
     dm=mgr.DataManager()
     data=dm.Data(8,0)
-    print data
+    print(data)
     vtxid=-1;
-    print "Got ",data.as_vector().size()," 3D vertex"
+    print("Got ",data.as_vector().size()," 3D vertex")
     for vtx3d in data.as_vector():
         vtxid+=1
-        print "<===================Start concrete vertex ",vtxid," ==========================>"
-        for plane in xrange(3):
+        print("<===================Start concrete vertex ",vtxid," ==========================>")
+        for plane in range(3):
             fig,ax=plt.subplots(figsize=(12,12),facecolor='w')
             shape_img = img_v[plane]
             shape_img=np.where(shape_img>0.0,1.0,0.0).astype(np.uint8)
@@ -445,7 +445,7 @@ for event in xrange(0,1000):
             plt.cla()
             plt.clf()
             plt.close()
-        print "<===================end concrete vertex ",vtxid," ==========================>"
+        print("<===================end concrete vertex ",vtxid," ==========================>")
         
     assman=dm.AssManager()
     #New VertexCluster
@@ -453,7 +453,7 @@ for event in xrange(0,1000):
     vtxid=-1
     for vtx in vtx_data:
         vtxid+=1
-        for plane in xrange(3):
+        for plane in range(3):
             fig,ax = plt.subplots(figsize=(12,12),facecolor='w')
             shape_img = img_v[plane]
             shape_img=np.where(shape_img>0.0,1.0,0.0).astype(np.uint8)

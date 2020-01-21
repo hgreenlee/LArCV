@@ -1,4 +1,4 @@
-from image_types.whiteimage   import WhiteImage
+from .image_types.whiteimage   import WhiteImage
 
 class WhiteImageFactory(object):
     def __init__(self):
