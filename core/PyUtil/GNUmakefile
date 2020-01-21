@@ -13,7 +13,7 @@ HEADERS = $(filter-out $(FMWK_HEADERS), $(wildcard *.h))
 INCFLAGS  = -I.                       #Include itself
 INCFLAGS += $(shell larcv-config --includes)
 INCFLAGS += $(shell python-config --includes)
-INCFLAGS += -I$(shell python -c "import numpy; print numpy.get_include()")
+INCFLAGS += -I$(shell python -c "import numpy; print(numpy.get_include())")
 INCFLAGS += -I$(LARCV_COREDIR)
 
 # platform-specific options
