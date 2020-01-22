@@ -7,12 +7,25 @@
 //#include <numpy/ndarrayobject.h>
 #include "numpy/arrayobject.h"
 
+namespace {
+
+#if PY_MAJOR_VERSION >= 3
+  int
+#else
+  void
+#endif
+  import_array_func()
+  {
+    import_array();
+  }
+}
+
 namespace larcv {
 
   void SetPyUtil()
   {
     static bool once=false;
-    if(!once) { import_array(); once=true; }
+    if(!once) { import_array_func(); once=true; }
   }
 
   PyObject* as_ndarray(const std::vector<float>& vec)
