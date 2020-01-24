@@ -9,12 +9,7 @@
 
 namespace {
 
-#if PY_MAJOR_VERSION >= 3
-  int
-#else
-  void
-#endif
-  import_array_func()
+  int import_array_func()
   {
     import_array();
   }

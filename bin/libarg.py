@@ -22,7 +22,7 @@ if 'GEO2D_BASEDIR' in os.environ:
 if 'LARCV_ANN' and 'ANN_LIBDIR' in os.environ:
     libs+= [" -lANN" ]
 if 'PYTHON_LIB' in os.environ:
-    libs+= [" -L%s -lpython2.7"%(os.environ["PYTHON_LIB"].strip())]
+    libs+= [" -L%s -lpython3.7m"%(os.environ["PYTHON_LIB"].strip())]
 
 objs_list=[]
 dict_list=[]
